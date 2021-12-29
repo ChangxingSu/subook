@@ -22,35 +22,50 @@
 % ----------------------------------------------------------------------
 %           User Top Level Packages: Required
 % ----------------------------------------------------------------------
-% \RequirePackage{xcolor}                                  % Color Setting
-\RequirePackage{kvoptions}                               % 传递参数
-\RequirePackage{etoolbox}                                % 传递命令
-\RequirePackage{geometry}                                % 自定义页面
-\RequirePackage{iftex}                                   % 判断编译器版本
-\usepackage{marginnote}
-\usepackage{sidenotes}
-\usepackage{fancyhdr}
-\usepackage{titlesec}
-\usepackage[many]{tcolorbox}
+% % \RequirePackage{xcolor}                                  % Color Setting
+% \RequirePackage{kvoptions}                               % 传递参数
+% % \RequirePackage{etoolbox}                                % 传递命令
+% \usepackage{marginnote}
+% \usepackage{sidenotes}
+% \usepackage{fancyhdr}
+% \usepackage{titlesec}
+% \usepackage[many]{tcolorbox}
+% \usepackage[dvipsnames]{xcolor}
+% \RequirePackage{geometry}                                % 自定义页面
+% \RequirePackage{iftex}                                   % 判断编译器版本
+
+
+
+\usepackage{marginnote,sidenotes,fancyhdr,titlesec,geometry}
 \usepackage[dvipsnames]{xcolor}
+\usepackage[many]{tcolorbox}
 
 % ----------------------------------------------------------------------
 %           User Top Level Packages: Additional & Styling
 % ----------------------------------------------------------------------
 
-\RequirePackage[T1]{fontenc}                            % Font Styling
-\RequirePackage{lmodern,mathrsfs}
-\RequirePackage{hyperref}
-\RequirePackage{csquotes}
-\RequirePackage{setspace}
-\RequirePackage[shortlabels]{enumitem}
+% \RequirePackage[T1]{fontenc}                            % Font Styling
+% \RequirePackage{lmodern,mathrsfs}
+% \RequirePackage{hyperref}
+% \RequirePackage{csquotes}
+% \RequirePackage{setspace}
+% \RequirePackage[shortlabels]{enumitem}
 
-\RequirePackage{mathtools,amssymb,amsfonts,amsthm,bm}   % Math Presets
-\RequirePackage{array,tabularx,booktabs}                % Table Presets
-\RequirePackage{graphicx,wrapfig,float,caption}         % Figure Presets
-\RequirePackage{setspace,multicol}                      % Text Presets
-\RequirePackage{tikz,physics,cancel}                    % Physics Presets
+% \RequirePackage{mathtools,amssymb,amsfonts,amsthm,bm}   % Math Presets
+% \RequirePackage{array,tabularx,booktabs}                % Table Presets
+% \RequirePackage{graphicx,wrapfig,float,caption}         % Figure Presets
+% \RequirePackage{setspace,multicol}                      % Text Presets
+% \RequirePackage{tikz,physics,cancel}                    % Physics Presets
+\usepackage[T1]{fontenc}                            % Font Styling
+\usepackage{lmodern,mathrsfs}
 
+\usepackage[shortlabels]{enumitem}
+
+\usepackage{mathtools,amssymb,amsfonts,amsthm,bm}   % Math Presets
+\usepackage{array,tabularx,booktabs}                % Table Presets
+\usepackage{graphicx,wrapfig,float,caption}         % Figure Presets
+\usepackage{setspace,multicol}                      % Text Presets
+\usepackage{tikz,physics,cancel}                    % Physics Presets
 
 % ----------------------------------------------------------------------
 %           User Language Prefrences 
@@ -185,6 +200,7 @@
 % ----------------------------------------------------------------------
 
 
+
 \newtheoremstyle{mystyle}%
   {}%
   {}%
@@ -294,6 +310,7 @@
   right=12pt,
   breakable,
 }
+
 
 \renewcommand*{\raggedleftmarginnote}{\noindent}
 \renewcommand*{\raggedrightmarginnote}{\noindent}
