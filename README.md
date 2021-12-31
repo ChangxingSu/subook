@@ -3,6 +3,15 @@
 
 # SUBOOK
 
+## Feature
+* Simple and beautiful
+* Margin Notes
+
+TO DO：
+* 侧边栏目录
+* 章节总结
+* 习题链接
+* 页眉页题
 ## Goal
 The central focus of this template was to expand the use of the margin in order to include; simple marginnotes, numbered side–notes, marginfigures, and margintables. 
 
