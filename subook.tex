@@ -1,11 +1,17 @@
 \documentclass[]{subook}
 
-\usepackage{CTEX}
-
+\usepackage{ctex}
+\usepackage{siunitx}
 %%%% lipsum
 \usepackage{zhlipsum}
 \usepackage{lipsum}
+\usepackage{fontspec} % change the font
+\usepackage{natbib}
+\setmainfont{Myriad_Pro_Regular.ttf}
+\bibliographystyle{unsrtnat}% set cite font 
+\setcitestyle{authoryear,open={(},close={)}} %Citation-related commands
 \begin{document}
+
 \section{中文测试}
 让我们开始吧~\marginnote{试一下中文侧边注.} 
 \zhlipsum[1-3]
@@ -14,18 +20,17 @@
 
 Lets begin it!\marginnote{Test english marginnote.}
 \lipsum[1-2]
+% \section{什么是生物信息学}
 
+% NCBI认为其是生物学是、信息技术和计算机科学融合在一起的跨学科科学领域。
 
-\section{什么是生物信息学
-}
-
-NCBI认为其是生物学、信息技术和计算机科学融合在一起的跨学科科学领域。
-
-美国生物技术信息中心(NCBI)的定义：The National Centre for Biotechnology Information (NCBI) defines Bioinformatics as the interdisciplinary field of science in which biology, information technology and computer science merge together, to allow new biological discoveries and insights and also help create a global perspective from which the principles of Biology can be identified. 
+% 美国生物技术信息中心(NCBI)的定义：
+The National Centre for Biotechnology Information (NCBI) \lec{Left Side}{Some text goes here.}  defines Bioinformatics as the interdisciplinary field of science in which biology, information technology and computer science merge together, to allow new biological discoveries and insights and also help create a global perspective from which the principles of Biology can be identified. 
 \begin{proof}
     The content of sss theorem.
 \end{proof}
-
+This thing costs \SI{123456}{\$}.
+There are \num{987654} people in this room, \SI{38}{\percent} of which are male.
 
 
 Here is a example
@@ -41,19 +46,40 @@ Here is a lemma
 \end{lemma}
 
 
-\begin{definition}
+\begin{definition}[definition]
     sdsad
 \end{definition}
 
 \begin{fullpage}
-\zhlipsum[2-4]
+% \zhlipsum[2-4]
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.6\textwidth]{img/cantontower.jpeg}
-    \caption{Matplotlib: Scatter Plot Example\label{fig:scatter}}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.6\textwidth]{img/cantontower.jpeg}
+%     \caption{Matplotlib: Scatter Plot Example\label{fig:scatter}}
+% \end{figure}
 
 \end{fullpage}
 
+
+
+
+
+
+% \begin{introduction}
+%     \item Definition of Theorem
+%     \item Ask for help
+%     \item Optimization Problem
+%     \item Property of Cauchy Series
+%     \item Angle of Corner
+%   \end{introduction}
+
+
+  sdsdsadasd\citep{li2022limb}
+
+
+\bibliography{reference}
+
 \end{document}
+
+

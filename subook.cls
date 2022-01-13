@@ -39,7 +39,11 @@
 \usepackage{marginnote,sidenotes,fancyhdr,titlesec,geometry}
 \usepackage[dvipsnames]{xcolor}
 \usepackage[many]{tcolorbox}
-
+\RequirePackage[colorlinks=true,
+urlcolor=Maroon,
+anchorcolor=Maroon,
+citecolor=brown,
+]{hyperref}
 % ----------------------------------------------------------------------
 %           User Top Level Packages: Additional & Styling
 % ----------------------------------------------------------------------
@@ -60,7 +64,9 @@
 \usepackage{lmodern,mathrsfs}
 
 \usepackage[shortlabels]{enumitem}
+% \usepackage{fontspec} % change the font
 
+% \setmainfont{[Myriad_Pro_Regular.ttf]}
 \usepackage{mathtools,amssymb,amsfonts,amsthm,bm}   % Math Presets
 \usepackage{array,tabularx,booktabs}                % Table Presets
 \usepackage{graphicx,wrapfig,float,caption}         % Figure Presets
@@ -311,6 +317,37 @@
 }
 
 
+\definecolor{structurecolor}{RGB}{0,120,2}
+\RequirePackage{multicol}
+\tcbset{
+  introductionsty/.style={
+    enhanced,
+    breakable,
+    colback=structurecolor!10,
+    colframe=structurecolor,
+    fonttitle=\bfseries,
+    colbacktitle=structurecolor,
+    fontupper=\citshape,
+    attach boxed title to top center={yshift=-3mm,yshifttext=-1mm},
+    boxrule=0pt,
+    toprule=0.5pt,
+    bottomrule=0.5pt,
+    top=8pt,
+    before skip=8pt,
+    sharp corners
+  },
+}
+
+
+\newcommand{\introductionname}{内容提要}
+\newenvironment{introduction}[1][\introductionname]{
+  \begin{tcolorbox}[introductionsty,title={#1}]
+    \begin{multicols}{2}
+      \begin{itemize}[label=\textcolor{structurecolor}{\upshape\scriptsize\SquareShadowBottomRight}]}{
+      \end{itemize}
+    \end{multicols}
+  \end{tcolorbox}}
+
 \renewcommand*{\raggedleftmarginnote}{\noindent}
 \renewcommand*{\raggedrightmarginnote}{\noindent}
 \newcommand{\mn}[1]{\textsuperscript{\thesidenote}{}\marginnote{\textsuperscript{\thesidenote}{}\itshape\footnotesize #1}\refstepcounter{sidenote}}
@@ -512,3 +549,6 @@
 \newcommand{\mfZ}{{\mathfrak{Z}}}
 
 %===========================================================================================================
+
+
+
