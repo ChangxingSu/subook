@@ -1,211 +1,291 @@
-%%%%%%%%%%%%%%%%%%%%%%
-%% start of file `subook.cls'.
-%% Copyright 2013-2021 ElegantLaTeX (elegantlatex2e@gmail.com)
+%% subook.sty
+%% A package created for personal note 
+%% by Changxing Su. 
+%% ------------------------------- Legal -------------------------------
+%% 
+%% This work may be distributed and/or modified under the conditions of 
+%% the LaTeX Project Public License, either version 1.3 of this license
+%% or (at your option) any later version. The latest version of this 
+%% license is in 
+%%        http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX version
+%% 2005/12/01 or later.
 %%
-%% This work may be distributed and/or modified freely
-%% available at https://github.com/chancey922/subook
-% 
-%%%%%%%%%%%%%%%%%%%%%
-% % !Mode:: "TeX:UTF-8"
+%%
+%% -------------------- Compiling this template  -----------------------
+%% This template uses biber for its bibliography and makeindex for its index.
+%% When you first open the template, compile it from the command line with the 
+%% commands below to make sure your LaTeX distribution is configured correctly:
+%% --------------------------------------------------------------------
+
+% ----------------------------------------------------------------------
+%                              Master Presets 
+% ----------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{subook}[2021/12/27 Super Un LaTeX book class]
-\gdef\@fpheader{\ }
-\gdef\@journal{jhep}
+\ProvidesClass{subook}[2021/12/27 SUper LaTeX book class]
+\LoadClass[openany]{book}% here we use openany option to  remove a blank page that gets added automatically after \part{}
 
-\newif\ifnotoc\notocfalse
-\newif\ifemailadd\emailaddfalse
-\newif\iftoccontinuous\toccontinuousfalse
-\newif\ifnatbibsort\natbibsorttrue
-\LoadClass{article}
-\DeclareOption{no-natbib-sort}{\natbibsortfalse}
-\ProcessOptions\relax
 % ----------------------------------------------------------------------
-%           User Top Level Packages: Required
+%                   User Top Level Packages: Required
 % ----------------------------------------------------------------------
-% % \RequirePackage{xcolor}                                  % Color Setting
-% \RequirePackage{kvoptions}                               % 传递参数
-% % \RequirePackage{etoolbox}                                % 传递命令
-% \usepackage{marginnote}
-% \usepackage{sidenotes}
-% \usepackage{fancyhdr}
-% \usepackage{titlesec}
-% \usepackage[many]{tcolorbox}
-% \usepackage[dvipsnames]{xcolor}
-% \RequirePackage{geometry}                                % 自定义页面
-% \RequirePackage{iftex}                                   % 判断编译器版本
 
+\usepackage{marginnote, % Margin note
+            % sidenotes,
+            fancyhdr, % Header and footer 
+            geometry, % Required for adjusting page dimensions and margins
+            }
+\usepackage[explicit]{titlesec} % Title setion
+\usepackage{xcolor} % Get color
+\usepackage[many]{tcolorbox} % Colorful Box
+\usepackage{tikz} % Drawing Picture
+\usetikzlibrary{calc}
+\usepackage{makeidx} % Required to make an index
+\makeindex % Tells LaTeX to create the files required for indexing
 
-
-\usepackage{marginnote,sidenotes,fancyhdr,titlesec,geometry}
-\usepackage[dvipsnames]{xcolor}
-\usepackage[many]{tcolorbox}
-\RequirePackage[colorlinks=true,
-urlcolor=Maroon,
-anchorcolor=Maroon,
-citecolor=brown,
-]{hyperref}
 % ----------------------------------------------------------------------
 %           User Top Level Packages: Additional & Styling
 % ----------------------------------------------------------------------
 
-% \RequirePackage[T1]{fontenc}                            % Font Styling
-% \RequirePackage{lmodern,mathrsfs}
-% \RequirePackage{hyperref}
-% \RequirePackage{csquotes}
-% \RequirePackage{setspace}
-% \RequirePackage[shortlabels]{enumitem}
-
-% \RequirePackage{mathtools,amssymb,amsfonts,amsthm,bm}   % Math Presets
-% \RequirePackage{array,tabularx,booktabs}                % Table Presets
-% \RequirePackage{graphicx,wrapfig,float,caption}         % Figure Presets
-% \RequirePackage{setspace,multicol}                      % Text Presets
-% \RequirePackage{tikz,physics,cancel}                    % Physics Presets
-\usepackage[T1]{fontenc}                            % Font Styling
-\usepackage{lmodern,mathrsfs}
-
-\usepackage[shortlabels]{enumitem}
-% \usepackage{fontspec} % change the font
-
-% \setmainfont{[Myriad_Pro_Regular.ttf]}
-\usepackage{mathtools,amssymb,amsfonts,amsthm,bm}   % Math Presets
-\usepackage{array,tabularx,booktabs}                % Table Presets
-\usepackage{graphicx,wrapfig,float,caption}         % Figure Presets
-\usepackage{setspace,multicol}                      % Text Presets
-\usepackage{tikz,physics,cancel}                    % Physics Presets
+\usepackage{epigraph,
+            etoolbox
+            }
+\usepackage{lipsum} % Random words
+\usepackage{minitoc} % Mini toc for each chapter
+\usepackage{mathtools,amsthm,amssymb,amsfonts,bm}   % Math Presets
+\usepackage{thmtools,amsmath}
+\RequirePackage[colorlinks=true,
+                urlcolor=Maroon,
+                anchorcolor=Maroon,
+                citecolor=brown,
+                ]{hyperref}
+\usepackage{natbib} % 引入natbib包，参考文献格式相关
+\usepackage{chapterbib}	% 引入chapterbib包，可以分章节显示参考文献，且参考文献编号各自独立
+\usepackage{listings} % Quote
 
 % ----------------------------------------------------------------------
-%           User Language Prefrences 
+%                            Defining Color
 % ----------------------------------------------------------------------
+\colorlet{sectcolor}{gray!65}
+\definecolor{structurecolor}{RGB}{0,120,2}%
+\definecolor{main}{RGB}{0,120,2}%
+\definecolor{second}{RGB}{230,90,7}%
+\definecolor{third}{RGB}{0,160,152}%
+\definecolor{myblue}{RGB}{0,163,243}
+\definecolor{winered}{rgb}{0.5,0,0}
+\definecolor{lightgrey}{rgb}{0.95,0.95,0.95}
+\definecolor{commentcolor}{RGB}{0,100,0}
+\definecolor{frenchplum}{RGB}{190,20,83}
+
+\bibliographystyle{unsrtnat}% set cite font 
+\setcitestyle{authoryear,open={(},close={)}} %Citation-related commands
+
+% ----------------------------------------------------------------------
+%                                 Layout
+% ----------------------------------------------------------------------
+%% \usepackage{geometry}
+\geometry{
+        paper=a4paper,% Paper size
+        top=2cm,% Top margin
+        bottom=1.5cm, % Bottom margin
+        right=6cm, %Right margin
+        left=1.5cm,% Left margin        
+        textheight=0.3cm,
+        marginparwidth=5cm,
+        marginparsep=0.5cm,
+        asymmetric, % Make marginnote always right
+        %showframe, % Uncomment to show how the type block is set on the page
+}
+%-----------------------------------------------------------------------
+%	                                  Cover
+%-----------------------------------------------------------------------
+\newcommand\nbvspace[1][3]{\vspace*{\stretch{#1}}}
+% allow some slack to avoid under/overfull boxes
+\newcommand\nbstretchyspace{\spaceskip0.5em plus 0.25em minus 0.25em}
+% To improve spacing on titlepages
+\newcommand{\nbtitlestretch}{\spaceskip0.6em}
+
+%-----------------------------------------------------------------------
+%	                            TABLE OF CONTENTS
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+%	                            Title Settings
+%-----------------------------------------------------------------------
+
+%% ------------------------- Header and Footer  ------------------------
+\newcommand\graysquare{\textcolor{sectcolor}{\rule{1ex}{1ex}}}
+\newcommand{\helv}{\fontfamily{phv}\fontseries{}\fontsize{10}{12}\selectfont}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+\fancyhf{}
+\fancyhead[RO]{\helv\rightmark\hspace{0.5em}\graysquare\hspace{0.5em}\thepage}
+\fancyhead[LE]{\helv\thepage\hspace{0.5em}\graysquare\hspace{0.5em}\leftmark}
+\renewcommand{\headrulewidth}{0pt}
+
+%% ----------------------------- Section  -------------------------------
+\titleformat{\section}
+{\normalfont\Large\bfseries}
+{\llap{\colorbox{sectcolor}{\makebox[3em][r] {\thesection}}\hspace{1em}}}
+{0em}{#1}
 
 
 % ----------------------------------------------------------------------
-%           User Page Prefrences 
-% ----------------------------------------------------------------------
-\DeclareGraphicsExtensions{.pdf,.png,.jpg}
-
-%% paper layout with left and right margin
-\geometry{paperheight=11in,paperwidth=8.5in,                   %fix paperwidth and height.
-    marginparsep=.02\paperwidth,marginparwidth=.2\paperwidth,
-    inner=.11\paperwidth,voffset=-1in,headheight=.02\paperheight,
-    headsep=.03\paperheight,footskip=20pt,
-    textheight=.795\paperheight,textwidth=.62\paperwidth}
-    
-%%% new page style
-\pagestyle{fancy}%
-\newlength{\myoddoffset}%
-\setlength{\myoddoffset}{\marginparwidth + \marginparsep}%
-\renewcommand{\sectionmark}[1]{\markboth{#1}{}}%
-\renewcommand{\subsectionmark}[1]{\markright{#1}{}}%
-    
-%%% new page style
-\fancypagestyle{fancynotes}{%
-    \fancyhf{}%
-    \fancyheadoffset[rh]{\myoddoffset}%
-    \renewcommand{\headrulewidth}{0pt}%
-    \fancyhead[L]{\textsc{\leftmark}}%
-    \fancyhead[R]{\footnotesize \textit{\rightmark}~~~~ \thepage}%
-    }%
-    
-%%% new page style
-\fancypagestyle{fancypart}{%
-    \fancyhf{}%
-    \fancyfootoffset[rh]{\myoddoffset}%
-    \renewcommand{\headrulewidth}{0pt}
-    \fancyfoot[L]{\footnotesize \thepage}%
-    }%
-        
-\titleformat{\part}[hang]{{\thispagestyle{fancypart}}\Huge\bfseries}{\marginnote{
-\begin{tcolorbox}[width=\marginparwidth,height=\marginparwidth/2,colback=black!75!white,colframe=black!75!white,center title,fonttitle=\bfseries\normalsize,title=PART,text fill]
-    \begin{center}
-    {\color{white}\thepart}
-    \end{center}
-    \end{tcolorbox}
-    }[-1.25in]}{0pt}{\sffamily\Huge\bfseries}
-
-% use minipage to create a new enviorment          
-\newenvironment{fullpage}
-    {\smallskip\noindent\begin{minipage}
-    {\textwidth+\marginparwidth+\marginparsep}\hrule\smallskip\smallskip}
-    {\hrule\end{minipage}\vspace{.1in}}
-
-
-% Page layout
-\renewcommand{\baselinestretch}{1.0}\normalsize
-\setlength\lineskip{1\p@}
-\setlength\parindent{1.2\parindent}
-\setlength\normallineskip{1\p@}
-\setlength\parskip{0\p@ \@plus \p@}
-\@lowpenalty   51
-\@medpenalty  151
-\@highpenalty 301
-\widowpenalty 1000
-\clubpenalty 1000
-
-% the depth of toc
-\setcounter{topnumber}{4}
-\renewcommand\topfraction{1}
-\setcounter{bottomnumber}{1}
-\renewcommand\bottomfraction{.6}
-\setcounter{totalnumber}{5}
-\renewcommand\textfraction{0}
-\renewcommand\floatpagefraction{1}
-\addtolength\textheight{\topskip}
-
-\marginparpush 6\p@
-\topmargin   .05\paperheight
-
-\setlength\arraycolsep{2\p@}
-\setlength\tabcolsep{6\p@}
-\setlength\arrayrulewidth{.4\p@}
-\setlength\doublerulesep{2\p@}
-\setlength\tabbingsep{\labelsep}
-\skip\@mpfootins = \skip\footins
-\setlength\fboxsep{3\p@}
-\setlength\fboxrule{.4\p@}
-% reset section
-\renewcommand\section{\@startsection{section}{1}{\z@}%
-                                {-3.5ex \@plus -1.3ex \@minus -.7ex}%
-                                {2.3ex \@plus.4ex \@minus .4ex}%
-                                {\normalfont\large\bfseries}}
-%headings style
-
-
-\newcommand\psection{\@startsection{section}{1}{\z@}%
-                                   {-3.5ex \@plus -1.3ex \@minus -.7ex}%
-                                   {2.3ex \@plus .4ex \@minus .4ex}%
-                                   {\ }}
-
-\renewcommand\section{\@startsection{section}{1}{\z@}%
-                                   {-3.5ex \@plus -1.3ex \@minus -.7ex}%
-                                   {2.3ex \@plus .4ex \@minus .4ex}%
-                                   {\sffamily\Large\bfseries}}
-\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
-                                   {-2.3ex \@plus -1ex \@minus -.5ex}%
-                                   {1.2ex \@plus .3ex \@minus .3ex}%
-                                   {\sffamily\large\bfseries}}
-\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
-                                   {-2.3ex \@plus -1ex \@minus -.5ex}%
-                                   {1.0ex \@plus .2ex \@minus .2ex}%
-                                   {\sffamily\normalsize\bfseries}}
-\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
-                                   {1.75ex \@plus1ex \@minus.2ex}%
-                                   {-1em}%
-                                   {\sffamily\normalsize\bfseries}}
-\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
-                                   {1.75ex \@plus1ex \@minus .2ex}%
-                                   {-1em}%
-                                   {\sffamily\normalsize\bfseries}}
-
-
-%Caption of figure and table
-\def\fnum@figure{\textbf{\figurename\nobreakspace\thefigure}}
-\def\fnum@table{\textbf{\tablename\nobreakspace\thetable}}
-% ----------------------------------------------------------------------
-%           User Created Environments 
+%                         User Created Environments 
 % ----------------------------------------------------------------------
 
 
+%% ------------------------------ Epigraph  ----------------------------
+%% https://tex.stackexchange.com/questions/65907/beautiful-quotes-in-documentclass-article
+%% \usepackage{epigraph}
+%% \usepackage{etoolbox}
+\setlength\epigraphwidth{8cm}
+\setlength\epigraphrule{0pt}
 
+\makeatletter
+\patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
+\makeatother
+
+
+%% ------------------------------ tcolorbox  ---------------------------
+%% using \tcbset you can define a common style containing the settings 
+%% that will be shared by your boxes
+%% \usepackage{tcolorbox}
+\tcbset{
+    common/.style={ % Basic style
+        % fontupper=\citshape,
+        lower separated=false,
+        % before upper={\setlength{\parindent}{\normalparindent}},
+        coltitle=white,
+        colback=gray!5,
+        boxrule=0.5pt,
+        fonttitle=\bfseries,
+        enhanced,
+        breakable,
+        top=8pt,
+        before skip=8pt,
+        attach boxed title to top left={
+        yshift=-0.11in,
+        xshift=0.15in},
+        boxed title style={
+        boxrule=0pt,
+        colframe=white,
+        arc=0pt,
+        outer arc=0pt},
+        separator sign={.},},
+    defstyle/.style={ % Definition style
+        common,
+        colframe=main,  
+        colback=main!5,
+        colbacktitle=main, 
+        overlay unbroken and last={
+        \node[anchor=south east, outer sep=0pt] at (\linewidth-width,0) {
+            \textcolor{main}{$\clubsuit$}};}},
+    thmstyle/.style={ % Theoram style
+        common,
+        colframe=second,  
+        colback=second!5,
+        colbacktitle=second, 
+        overlay unbroken and last={
+        \node[anchor=south east, outer sep=0pt] at (\linewidth-width,0) {
+            \textcolor{second}{$\heartsuit$}};}},
+    lmastyle/.style={ % Lemma style
+        common,
+        colframe=violet,  
+        colback=violet!5,
+        colbacktitle=violet, 
+        overlay unbroken and last={
+        \node[anchor=south east, outer sep=0pt] at (\linewidth-width,0) {
+            \textcolor{violet}{$\diamondsuit$}};}},
+    corstyle/.style={ 
+        common,
+        colframe=purple,  
+        colback=purple!5,
+        colbacktitle=purple, 
+        overlay unbroken and last={
+        \node[anchor=south east, outer sep=0pt] at (\linewidth-width,0) {
+            \textcolor{purple}{$\diamondsuit$}};}},
+    propstyle/.style={
+        common,
+        colframe=third,  
+        colback=third!5,
+        colbacktitle=third, 
+        overlay unbroken and last={
+            \node[anchor=south east, outer sep=0pt] at (\linewidth-width,0) {
+            \textcolor{third}{$\spadesuit$}};}},
+    examstyle/.style={ % Example style
+            breakable,
+            enhanced,
+            outer arc=0pt,
+            arc=0pt,
+            colframe=myblue,
+            colback=myblue!20,
+            attach boxed title to top left,
+            boxed title style={
+                colback=myblue,
+                outer arc=0pt,
+                arc=0pt,
+                top=2pt,
+                bottom=2pt,
+                },
+            fonttitle=\sffamily
+            },
+    example box/.style={ % Example Box Style
+        common,
+        breakable, 
+        toggle enlargement=evenpage, 
+        grow to right by=\marginparwidth+\marginparsep, 
+        sidebyside, 
+        lower separated=false, 
+        if odd page={lefthand width=\textwidth-2.5mm-2pt, before lower app=\centering,}{before upper app=\centering, righthand width=\textwidth-2.5mm-2pt, sidebyside switch},% p.125 of manual
+        boxrule=.5mm, 
+        boxsep=1mm, 
+        left=1pt,
+        right=1pt,      
+        sidebyside gap=\marginparsep+2mm+2pt, 
+        fonttitle=\bfseries\Large, 
+        code=\refstepcounter{mytcbcounter},
+        title={Problem~\themytcbcounter{} #1}, 
+        },
+}
+%------------------------------------------------
+\newcommand{\definitionname}{Definition}
+\DeclareTColorBox[auto counter,number within=chapter]{definition}{ o t\label g }{
+    common,defstyle,
+    IfValueTF={#1}{title={\definitionname~\thetcbcounter\ (#1)}}{title=\definitionname~\thetcbcounter},
+    IfBooleanTF={#2}{label=#3}{}}
+%------------------------------------------------
+\newcommand{\theoremname}{Theorem}
+\DeclareTColorBox[auto counter,number within=chapter]{theorem}{ o t\label g }{
+    common,thmstyle,
+    IfValueTF={#1}{title={\theoremname~\thetcbcounter\ (#1)}}{title=\theoremname~\thetcbcounter},
+    IfBooleanTF={#2}{label=#3}{}}
+%------------------------------------------------
+\newcommand{\lemmaname}{Lemma}
+\DeclareTColorBox[auto counter,number within=chapter]{lemma}{ o t\label g }{
+    common,lmastyle,
+    IfValueTF={#1}{title={\lemmaname~\thetcbcounter\ (#1)}}{title=\lemmaname~\thetcbcounter},
+    IfBooleanTF={#2}{label=#3}{}}
+%------------------------------------------------
+\newcommand{\propositionname}{Proposition}
+\DeclareTColorBox[auto counter,number within=chapter]{proposition}{ o t\label g }{
+    common,propstyle,
+    IfValueTF={#1}{title={\propositionname~\thetcbcounter\ (#1)}}{title=\propositionname~\thetcbcounter},
+    IfBooleanTF={#2}{label=#3}{}}
+%------------------------------------------------
+\newcommand{\postulatename}{Postulate}
+\DeclareTColorBox[auto counter,number within=chapter]{postulate}{ o t\label g }{
+    common,thmstyle,
+    IfValueTF={#1}{title={\postulatename~\thetcbcounter\ (#1)}}{title=\postulatename~\thetcbcounter},
+    IfBooleanTF={#2}{label=#3}{}}
+%------------------------------------------------
+\newcommand{\corollaryname}{Corollary}
+\DeclareTColorBox[auto counter,number within=chapter]{corollary}{ o t\label g }{
+    common,corstyle,
+    IfValueTF={#1}{title={\corollaryname~\thetcbcounter\ (#1)}}{title=\corollaryname~\thetcbcounter},
+    IfBooleanTF={#2}{label=#3}{}}
+
+%------------------------------------------------
 \newtheoremstyle{mystyle}%
   {}%
   {}%
@@ -215,340 +295,110 @@ citecolor=brown,
   {.}%
   { }%
   {}%
-
-\renewenvironment{proof}{{\sffamily\bfseries Proof. }}{\qed}
-
 \theoremstyle{mystyle}{
   \newtheorem*{remark}{Remark}
 }
-
-\theoremstyle{mystyle}{
-  \newtheorem{definition}{Definition}[section]
-}
-
-\theoremstyle{mystyle}{
-  \newtheorem{theorem}{Theorem}[section]
-}
-
-\theoremstyle{mystyle}{
-  \newtheorem{lemma}[theorem]{Lemma}
-}
-
-\theoremstyle{mystyle}{
-  \newtheorem*{example}{Example}
-}
-
-\theoremstyle{definition}{
-    \newtheorem*{exercise}{Exercise}}
-
-
-\tcolorboxenvironment{definition}{
-  boxrule=0pt,
-  boxsep=2pt,
-  colback={White!90!Cerulean},
-  enhanced jigsaw, 
-  borderline west={2pt}{0pt}{Cerulean},
-  sharp corners,
-  before skip=10pt,
-  after skip=10pt,
-  breakable,
-}
-
-\tcolorboxenvironment{theorem}{
-  boxrule=0pt,
-  boxsep=2pt,
-  colback={White!90!Dandelion},
-  enhanced jigsaw, 
-  borderline west={2pt}{0pt}{Dandelion},
-  sharp corners,
-  before skip=10pt,
-  after skip=10pt,
-  breakable,
-}
-
-\tcolorboxenvironment{lemma}{
-  boxrule=0pt,
-  boxsep=2pt,
-  blanker,
-  borderline west={2pt}{0pt}{Red},
-  before skip=10pt,
-  after skip=10pt,
-  sharp corners,
-  left=12pt,
-  right=12pt,
-  breakable,
-}
-
 \tcolorboxenvironment{proof}{
-  boxrule=0pt,
-  boxsep=2pt,
-  blanker,
-  borderline west={2pt}{0pt}{NavyBlue!80!white},
-  before skip=10pt,
-  after skip=10pt,
-  left=12pt,
-  right=12pt,
-  breakable,
+    boxrule=0pt,
+    boxsep=2pt,
+    blanker,
+    borderline west={2pt}{0pt}{black},
+    before skip=10pt,
+    after skip=10pt,
+    left=8pt,
+    right=12pt,
+    breakable,
 }
-
+\renewenvironment{proof}{{\sffamily\bfseries Proof. }}{\qed}
 \tcolorboxenvironment{remark}{
   boxrule=0pt,
   boxsep=2pt,
   blanker,
-  borderline west={2pt}{0pt}{Green},
+  borderline west={2pt}{0pt}{main},
+  borderline east={2pt}{0pt}{main},
   before skip=10pt,
   after skip=10pt,
   left=12pt,
   right=12pt,
   breakable,
 }
-
-\tcolorboxenvironment{example}{
-  boxrule=0pt,
-  boxsep=2pt,
-  blanker,
-  borderline west={2pt}{0pt}{Black},
-  sharp corners,
-  before skip=10pt,
-  after skip=10pt,
-  left=12pt,
-  right=12pt,
-  breakable,
+%------------------------------------------------
+\newcommand{\examplename}{Example}
+\NewTColorBox
+[%
+  use counter=mytcbcounter, 
+]{examplebox}{ O{} +m }{%
+  breakable, 
+  toggle enlargement=evenpage, 
+  grow to left by=\marginparwidth+\marginparsep, 
+  sidebyside, 
+  lower separated=false, 
+  if odd page={lefthand width=\textwidth-2.5mm-2pt, before lower app=\centering,}{righthand width=\textwidth-2.5mm-2pt, before upper app=\centering},
+  boxrule=.5mm, 
+  boxsep=1mm, 
+  left=1pt,
+  right=1pt, 
+  sidebyside gap=\marginparsep+2mm+2pt, 
+  fonttitle=\bfseries\Large, 
+  title={\examplename~\themytcbcounter #2}, 
+  #1,
+}
+%------------------------------------------------
+\newtcolorbox[auto counter]{example}[1][]{
+  examstyle,
+  colback=white,
+  rightrule=0pt,
+  toprule=0pt,
+  title={\examplename~\thetcbcounter},
+  overlay unbroken and first={
+      \path
+        let
+        \p1=(title.north east),
+        \p2=(frame.north east)
+        in
+        node[anchor=west,font=\sffamily,color=myblue,text width=\x2-\x1] 
+        at (title.east) {#1};
+  }
 }
 
+%------------------------------------------------
+\newcounter{mytcbcounter}
+\setcounter{mytcbcounter}{0}
+\numberwithin{mytcbcounter}{chapter}
 
-\definecolor{structurecolor}{RGB}{0,120,2}
-\RequirePackage{multicol}
-\tcbset{
-  introductionsty/.style={
-    enhanced,
-    breakable,
-    colback=structurecolor!10,
-    colframe=structurecolor,
-    fonttitle=\bfseries,
-    colbacktitle=structurecolor,
-    fontupper=\citshape,
-    attach boxed title to top center={yshift=-3mm,yshifttext=-1mm},
-    boxrule=0pt,
-    toprule=0.5pt,
-    bottomrule=0.5pt,
-    top=8pt,
-    before skip=8pt,
-    sharp corners
-  },
+\newtcolorbox{tbox}[1]{
+    colback=gray!5, colframe=gray, coltext=black,
+    sharp corners, enhanced, breakable, parbox=false,
+    before skip=1em, after skip=1em,
+    title={#1}, fonttitle=\usefont{OT1}{phv}{b}{n}, 
+    attach boxed title to top left={yshift=-0.1mm}, boxed title style={sharp corners, colback=gray, left=0.405cm},
+    rightrule=-1pt,toprule=-1pt, bottomrule=-1pt
 }
 
+%% ------------------------------ Listings  ---------------------------
+% \RequirePackage{listings}
+\renewcommand{\ttdefault}{cmtt}
+% \definecolor{winered}{rgb}{0.5,0,0}
+% \definecolor{lightgrey}{rgb}{0.95,0.95,0.95}
+% \definecolor{commentcolor}{RGB}{0,100,0}
+% \definecolor{frenchplum}{RGB}{190,20,83}
+\lstdefinestyle{estyle}{
+  basicstyle=%
+    \ttfamily
+    \lst@ifdisplaystyle\footnotesize\fi
+}
+\lstset{basicstyle=\scriptsize\ttfamily,style=estyle}
 
-\newcommand{\introductionname}{内容提要}
-\newenvironment{introduction}[1][\introductionname]{
-  \begin{tcolorbox}[introductionsty,title={#1}]
-    \begin{multicols}{2}
-      \begin{itemize}[label=\textcolor{structurecolor}{\upshape\scriptsize\SquareShadowBottomRight}]}{
-      \end{itemize}
-    \end{multicols}
-  \end{tcolorbox}}
-
-\renewcommand*{\raggedleftmarginnote}{\noindent}
-\renewcommand*{\raggedrightmarginnote}{\noindent}
-\newcommand{\mn}[1]{\textsuperscript{\thesidenote}{}\marginnote{\textsuperscript{\thesidenote}{}\itshape\footnotesize #1}\refstepcounter{sidenote}}
-\newcommand{\en}[1]{\marginnote{\footnotesize{#1}}}
-\newcommand{\lec}[2]{{\setlength{\marginparwidth}{.07\paperwidth}\reversemarginpar\marginnote{\centering\footnotesize{\textsf{\bfseries #1}}\\#2}}}
-\newcommand{\sn}[1]{\sidenote{\itshape\footnotesize #1}}
-
-
-% ----------------------------------------------------------------------
-%           User Created Commands
-% ----------------------------------------------------------------------
-
-\newcommand*\widefbox[1]{\fbox{\hspace{2em}#1\hspace{2em}}}
-\newcommand{\xint}{\int_{x_1}^{x_2}}
-\newcommand{\tint}{\int_{t_1}^{t_2}}
-\newcommand{\mw}{\sqrt{m\omega}}
-\newcommand{\de}{\delta}
-\newcommand{\dde}{\dot{\delta}}
-\newcommand{\di}{\delta_i}
-\newcommand{\ddi}{\dot{\delta_i}}
-\newcommand{\dddi}{\ddot{\delta_i}}
-\newcommand{\dipl}{\delta_{i+1}}
-\newcommand{\dimi}{\delta_{i-1}}
-\newcommand{\ddt}[1]{\frac{{d} #1}{dt}}
-\newcommand{\ddtt}[1]{\frac{d^2 #1}{dt^2}}
-\newcommand{\ddx}[1]{\frac{d #1}{dx}}
-\newcommand{\ddxx}[1]{\frac{d^2 #1}{dx^2}}
-\newcommand{\eps}{\epsilon}
-\newcommand{\del}[2]{\frac{\partial #1}{\partial #2}}
-\newcommand{\deltwo}[2]{\frac{\partial^2 #1}{\partial #2^2}}
-\newcommand{\lam}{\lambda}
-\newcommand{\Lam}{\Lambda}
-\newcommand{\sig}{\sigma}
-\newcommand{\Sig}{\Sigma}
-\newcommand{\half}{\frac{1}{2}}
-\newcommand{\munu}{{\mu\nu}}
-\newcommand{\thalf}{\tfrac{1}{2}}
-
-\newcommand{\bfA}{{\bf A}}
-\newcommand{\bfB}{{\bf B}}
-\newcommand{\bfC}{{\bf C}}
-\newcommand{\bfD}{{\bf D}}
-\newcommand{\bfE}{{\bf E}}
-\newcommand{\bfF}{{\bf F}}
-\newcommand{\bfG}{{\bf G}}
-\newcommand{\bfH}{{\bf H}}
-\newcommand{\bfI}{{\bf I}}
-\newcommand{\bfJ}{{\bf J}}
-\newcommand{\bfK}{{\bf K}}
-\newcommand{\bfL}{{\bf L}}
-\newcommand{\bfM}{{\bf M}}
-\newcommand{\bfN}{{\bf N}}
-\newcommand{\bfO}{{\bf O}}
-\newcommand{\bfP}{{\bf P}}
-\newcommand{\bfQ}{{\bf Q}}
-\newcommand{\bfR}{{\bf R}}
-\newcommand{\bfS}{{\bf S}}
-\newcommand{\bfT}{{\bf T}}
-\newcommand{\bfU}{{\bf U}}
-\newcommand{\bfV}{{\bf V}}
-\newcommand{\bfW}{{\bf W}}
-\newcommand{\bfX}{{\bf X}}
-\newcommand{\bfY}{{\bf Y}}
-\newcommand{\bfZ}{{\bf Z}}
-
-\newcommand{\bfa}{{\bf a}}
-\newcommand{\bfb}{{\bf b}}
-\newcommand{\bfc}{{\bf c}}
-\newcommand{\bfd}{{\bf d}}
-\newcommand{\bfe}{{\bf e}}
-\newcommand{\bff}{{\bf f}}
-\newcommand{\bfg}{{\bf g}}
-\newcommand{\bfh}{{\bf h}}
-\newcommand{\bfi}{{\bf i}}
-\newcommand{\bfj}{{\bf j}}
-\newcommand{\bfk}{{\bf k}}
-\newcommand{\bfl}{{\bf l}}
-\newcommand{\bfm}{{\bf m}}
-\newcommand{\bfn}{{\bf n}}
-\newcommand{\bfo}{{\bf o}}
-\newcommand{\bfp}{{\bf p}}
-\newcommand{\bfq}{{\bf q}}
-\newcommand{\bfr}{{\bf r}}
-\newcommand{\bfs}{{\bf s}}
-\newcommand{\bft}{{\bf t}}
-\newcommand{\bfu}{{\bf u}}
-\newcommand{\bfv}{{\bf v}}
-\newcommand{\bfw}{{\bf w}}
-\newcommand{\bfx}{{\bf x}}
-\newcommand{\bfy}{{\bf y}}
-\newcommand{\bfz}{{\bf z}}
-
-\newcommand{\mcA}{{\mathcal{A}}}
-\newcommand{\mcB}{{\mathcal{B}}}
-\newcommand{\mcC}{{\mathcal{C}}}
-\newcommand{\mcD}{{\mathcal{D}}}
-\newcommand{\mcE}{{\mathcal{E}}}
-\newcommand{\mcF}{{\mathcal{F}}}
-\newcommand{\mcG}{{\mathcal{G}}}
-\newcommand{\mcH}{{\mathcal{H}}}
-\newcommand{\mcI}{{\mathcal{I}}}
-\newcommand{\mcJ}{{\mathcal{J}}}
-\newcommand{\mcK}{{\mathcal{K}}}
-\newcommand{\mcL}{{\mathcal{L}}}
-\newcommand{\mcM}{{\mathcal{M}}}
-\newcommand{\mcN}{{\mathcal{N}}}
-\newcommand{\mcO}{{\mathcal{O}}}
-\newcommand{\mcP}{{\mathcal{P}}}
-\newcommand{\mcQ}{{\mathcal{Q}}}
-\newcommand{\mcR}{{\mathcal{R}}}
-\newcommand{\mcS}{{\mathcal{S}}}
-\newcommand{\mcT}{{\mathcal{T}}}
-\newcommand{\mcU}{{\mathcal{U}}}
-\newcommand{\mcV}{{\mathcal{V}}}
-\newcommand{\mcW}{{\mathcal{W}}}
-\newcommand{\mcX}{{\mathcal{X}}}
-\newcommand{\mcY}{{\mathcal{Y}}}
-\newcommand{\mcZ}{{\mathcal{Z}}}
-
-\newcommand{\bbA}{{\mathbb{A}}}
-\newcommand{\bbB}{{\mathbb{B}}}
-\newcommand{\bbC}{{\mathbb{C}}}
-\newcommand{\bbD}{{\mathbb{D}}}
-\newcommand{\bbE}{{\mathbb{E}}}
-\newcommand{\bbF}{{\mathbb{F}}}
-\newcommand{\bbG}{{\mathbb{G}}}
-\newcommand{\bbH}{{\mathbb{H}}}
-\newcommand{\bbI}{{\mathbb{I}}}
-\newcommand{\bbJ}{{\mathbb{J}}}
-\newcommand{\bbK}{{\mathbb{K}}}
-\newcommand{\bbL}{{\mathbb{L}}}
-\newcommand{\bbM}{{\mathbb{M}}}
-\newcommand{\bbN}{{\mathbb{N}}}
-\newcommand{\bbO}{{\mathbb{O}}}
-\newcommand{\bbP}{{\mathbb{P}}}
-\newcommand{\bbQ}{{\mathbb{Q}}}
-\newcommand{\bbR}{{\mathbb{R}}}
-\newcommand{\bbS}{{\mathbb{S}}}
-\newcommand{\bbT}{{\mathbb{T}}}
-\newcommand{\bbU}{{\mathbb{U}}}
-\newcommand{\bbV}{{\mathbb{V}}}
-\newcommand{\bbW}{{\mathbb{W}}}
-\newcommand{\bbX}{{\mathbb{X}}}
-\newcommand{\bbY}{{\mathbb{Y}}}
-\newcommand{\bbZ}{{\mathbb{Z}}}
-
-\newcommand{\mfa}{{\mathfrak{a}}}
-\newcommand{\mfb}{{\mathfrak{b}}}
-\newcommand{\mfc}{{\mathfrak{c}}}
-\newcommand{\mfd}{{\mathfrak{d}}}
-\newcommand{\mfe}{{\mathfrak{e}}}
-\newcommand{\mff}{{\mathfrak{f}}}
-\newcommand{\mfg}{{\mathfrak{g}}}
-\newcommand{\mfh}{{\mathfrak{h}}}
-\newcommand{\mfi}{{\mathfrak{i}}}
-\newcommand{\mfj}{{\mathfrak{j}}}
-\newcommand{\mfk}{{\mathfrak{k}}}
-\newcommand{\mfl}{{\mathfrak{l}}}
-\newcommand{\mfm}{{\mathfrak{m}}}
-\newcommand{\mfn}{{\mathfrak{n}}}
-\newcommand{\mfo}{{\mathfrak{o}}}
-\newcommand{\mfp}{{\mathfrak{p}}}
-\newcommand{\mfq}{{\mathfrak{q}}}
-\newcommand{\mfr}{{\mathfrak{r}}}
-\newcommand{\mfs}{{\mathfrak{s}}}
-\newcommand{\mft}{{\mathfrak{t}}}
-\newcommand{\mfu}{{\mathfrak{u}}}
-\newcommand{\mfv}{{\mathfrak{v}}}
-\newcommand{\mfw}{{\mathfrak{w}}}
-\newcommand{\mfx}{{\mathfrak{x}}}
-\newcommand{\mfy}{{\mathfrak{y}}}
-\newcommand{\mfz}{{\mathfrak{z}}}
-
-\newcommand{\mfA}{{\mathfrak{A}}}
-\newcommand{\mfB}{{\mathfrak{B}}}
-\newcommand{\mfC}{{\mathfrak{C}}}
-\newcommand{\mfD}{{\mathfrak{D}}}
-\newcommand{\mfE}{{\mathfrak{E}}}
-\newcommand{\mfF}{{\mathfrak{F}}}
-\newcommand{\mfG}{{\mathfrak{G}}}
-\newcommand{\mfH}{{\mathfrak{H}}}
-\newcommand{\mfI}{{\mathfrak{I}}}
-\newcommand{\mfJ}{{\mathfrak{J}}}
-\newcommand{\mfK}{{\mathfrak{K}}}
-\newcommand{\mfL}{{\mathfrak{L}}}
-\newcommand{\mfM}{{\mathfrak{M}}}
-\newcommand{\mfN}{{\mathfrak{N}}}
-\newcommand{\mfO}{{\mathfrak{O}}}
-\newcommand{\mfP}{{\mathfrak{P}}}
-\newcommand{\mfQ}{{\mathfrak{Q}}}
-\newcommand{\mfR}{{\mathfrak{R}}}
-\newcommand{\mfS}{{\mathfrak{S}}}
-\newcommand{\mfT}{{\mathfrak{T}}}
-\newcommand{\mfU}{{\mathfrak{U}}}
-\newcommand{\mfV}{{\mathfrak{V}}}
-\newcommand{\mfW}{{\mathfrak{W}}}
-\newcommand{\mfX}{{\mathfrak{X}}}
-\newcommand{\mfY}{{\mathfrak{Y}}}
-\newcommand{\mfZ}{{\mathfrak{Z}}}
-
-%===========================================================================================================
-
-
-
+\lstset{language=[LaTeX]TeX,
+	texcsstyle=*\color{winered},
+	numbers=none,
+	breaklines=true,
+	keywordstyle=\color{winered},
+	frame=tlbr,framesep=4pt,framerule=0pt,
+	commentstyle=\color{commentcolor},
+	emph={elegantpaper,fontenc,fontspec,xeCJK,FiraMono,xunicode,newtxmath,figure,fig,image,img,table,itemize,enumerate,newtxtext,newtxtt,ctex,microtype,description,times,newtx,booktabs,tabular,PDFLaTeX,XeLaTeX,type1cm,BibTeX,cite,gbt7714,lang},
+	emphstyle={\color{frenchplum}},
+	morekeywords={DeclareSymbolFont,SetSymbolFont,toprule,midrule,bottomrule,institute,version,includegraphics,setmainfont,setsansfont,setmonofont ,setCJKmainfont,setCJKsansfont,setCJKmonofont,RequirePackage,figref,tabref,email,maketitle,keywords,zhdate,zhtoday},
+	tabsize=2,
+	backgroundcolor=\color{lightgrey}
+}

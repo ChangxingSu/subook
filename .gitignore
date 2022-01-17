@@ -244,3 +244,6 @@ TSWLatexianTemp*
 
 # generated if using elsarticle.cls
 *.spl
+
+# beta folder
+beta/
