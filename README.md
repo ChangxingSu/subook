@@ -29,6 +29,8 @@ preloaded packages that any physics or mathematics students would require while 
 
 Lastly, there are a few stylistic improvements that allow for better readability.
 
+## NOTE
+Please, report any issues you find on https://github.com/chancey922/subook/issues,which is better than writing on an e-mail list or a web forum. Forking and pull requests are welcome.
 ## License
 
 This work may be distributed and/or modified under the conditions of the LaTeX
