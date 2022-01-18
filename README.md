@@ -4,17 +4,19 @@
 # SUBOOK(BETA):An LaTeX Template for Books
 STILL IN DEVELOPING
 ## Feature
-* Simple and beautiful
 * Margin Notes
 * Minitoc
 * Colorful Box
 * Bib for each chapter
 * Header and footer
+* Full page Environment
 
 TO DO：
 * Simple and beautiful
-* Summary
+* Summary Environment
 * 习题链接
+* Beautiful Cover and contents
+* idx page
 ## Overview
 ![img](img/overview1.png)
 ![img](img/overview2.png)

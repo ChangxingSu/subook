@@ -39,6 +39,7 @@
 \usepackage[many]{tcolorbox} % Colorful Box
 \usepackage{tikz} % Drawing Picture
 \usetikzlibrary{calc}
+\usepackage{siunitx} %  Use the siunitx package to format all numbers, currencies, units, etc:
 \usepackage{makeidx} % Required to make an index
 \makeindex % Tells LaTeX to create the files required for indexing
 
@@ -54,13 +55,14 @@
 \usepackage{mathtools,amsthm,amssymb,amsfonts,bm}   % Math Presets
 \usepackage{thmtools,amsmath}
 \RequirePackage[colorlinks=true,
-                urlcolor=Maroon,
-                anchorcolor=Maroon,
+                % urlcolor=Maroon,
+                % anchorcolor=Maroon,
                 citecolor=brown,
                 ]{hyperref}
 \usepackage{natbib} % 引入natbib包，参考文献格式相关
 \usepackage{chapterbib}	% 引入chapterbib包，可以分章节显示参考文献，且参考文献编号各自独立
 \usepackage{listings} % Quote
+\usepackage{caption}
 
 % ----------------------------------------------------------------------
 %                            Defining Color
@@ -95,6 +97,13 @@
         asymmetric, % Make marginnote always right
         %showframe, % Uncomment to show how the type block is set on the page
 }
+
+
+\newenvironment{fullpage}
+    {\smallskip\noindent\begin{minipage}
+    {\textwidth+\marginparwidth+\marginparsep}\smallskip\smallskip}
+    {\end{minipage}\vspace{.1in}}
+
 %-----------------------------------------------------------------------
 %	                                  Cover
 %-----------------------------------------------------------------------
@@ -287,16 +296,16 @@
 
 %------------------------------------------------
 \newtheoremstyle{mystyle}%
-  {}%
-  {}%
-  {}%
-  {}%
-  {\sffamily\bfseries}%
-  {.}%
-  { }%
-  {}%
+    {}%
+    {}%
+    {}%
+    {}%
+    {\sffamily\bfseries}%
+    {.}%
+    { }%
+    {}%
 \theoremstyle{mystyle}{
-  \newtheorem*{remark}{Remark}
+    \newtheorem*{remark}{Remark}
 }
 \tcolorboxenvironment{proof}{
     boxrule=0pt,
@@ -311,37 +320,37 @@
 }
 \renewenvironment{proof}{{\sffamily\bfseries Proof. }}{\qed}
 \tcolorboxenvironment{remark}{
-  boxrule=0pt,
-  boxsep=2pt,
-  blanker,
-  borderline west={2pt}{0pt}{main},
-  borderline east={2pt}{0pt}{main},
-  before skip=10pt,
-  after skip=10pt,
-  left=12pt,
-  right=12pt,
-  breakable,
+    boxrule=0pt,
+    boxsep=2pt,
+    blanker,
+    borderline west={2pt}{0pt}{main},
+    borderline east={2pt}{0pt}{main},
+    before skip=10pt,
+    after skip=10pt,
+    left=12pt,
+    right=12pt,
+    breakable,
 }
 %------------------------------------------------
 \newcommand{\examplename}{Example}
 \NewTColorBox
 [%
-  use counter=mytcbcounter, 
+    use counter=mytcbcounter, 
 ]{examplebox}{ O{} +m }{%
-  breakable, 
-  toggle enlargement=evenpage, 
-  grow to left by=\marginparwidth+\marginparsep, 
-  sidebyside, 
-  lower separated=false, 
-  if odd page={lefthand width=\textwidth-2.5mm-2pt, before lower app=\centering,}{righthand width=\textwidth-2.5mm-2pt, before upper app=\centering},
-  boxrule=.5mm, 
-  boxsep=1mm, 
-  left=1pt,
-  right=1pt, 
-  sidebyside gap=\marginparsep+2mm+2pt, 
-  fonttitle=\bfseries\Large, 
-  title={\examplename~\themytcbcounter #2}, 
-  #1,
+    breakable, 
+    toggle enlargement=evenpage, 
+    grow to left by=\marginparwidth+\marginparsep, 
+    sidebyside, 
+    lower separated=false, 
+    if odd page={lefthand width=\textwidth-2.5mm-2pt, before lower app=\centering,}{righthand width=\textwidth-2.5mm-2pt, before upper app=\centering},
+    boxrule=.5mm, 
+    boxsep=1mm, 
+    left=1pt,
+    right=1pt, 
+    sidebyside gap=\marginparsep+2mm+2pt, 
+    fonttitle=\bfseries\Large, 
+    title={\examplename~\themytcbcounter #2}, 
+    #1,
 }
 %------------------------------------------------
 \newtcolorbox[auto counter]{example}[1][]{
@@ -402,3 +411,47 @@
 	tabsize=2,
 	backgroundcolor=\color{lightgrey}
 }
+
+
+% ----------------------------------------------------------------------
+%           User Created Commands
+% ----------------------------------------------------------------------
+\renewcommand{\vec}[1]{\mathbold{#1}} % Lowercase italic bold for vectors
+\newcommand{\mat}[1]{\mathbold{#1}} % Uppercase italic bold for matrices
+\newcommand{\xint}{\int_{x_1}^{x_2}}
+\newcommand{\del}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\deltwo}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\ddx}[1]{\frac{d #1}{dx}}
+\newcommand{\ddxx}[1]{\frac{d^2 #1}{dx^2}}
+
+\newcommand\iid{\stackrel{\mathclap{\tiny\normalfont\mbox{i.i.d.}}}{\sim}}
+\newcommand\defn{\stackrel{\mathclap{\tiny\Delta}}{=}}
+\newcommand\E{\mathbb{E}}
+\newcommand\Var{\mathrm{Var}}
+
+\newcommand{\mfA}{{\mathfrak{A}}}
+\newcommand{\mfB}{{\mathfrak{B}}}
+\newcommand{\mfC}{{\mathfrak{C}}}
+\newcommand{\mfD}{{\mathfrak{D}}}
+\newcommand{\mfE}{{\mathfrak{E}}}
+\newcommand{\mfF}{{\mathfrak{F}}}
+\newcommand{\mfG}{{\mathfrak{G}}}
+\newcommand{\mfH}{{\mathfrak{H}}}
+\newcommand{\mfI}{{\mathfrak{I}}}
+\newcommand{\mfJ}{{\mathfrak{J}}}
+\newcommand{\mfK}{{\mathfrak{K}}}
+\newcommand{\mfL}{{\mathfrak{L}}}
+\newcommand{\mfM}{{\mathfrak{M}}}
+\newcommand{\mfN}{{\mathfrak{N}}}
+\newcommand{\mfO}{{\mathfrak{O}}}
+\newcommand{\mfP}{{\mathfrak{P}}}
+\newcommand{\mfQ}{{\mathfrak{Q}}}
+\newcommand{\mfR}{{\mathfrak{R}}}
+\newcommand{\mfS}{{\mathfrak{S}}}
+\newcommand{\mfT}{{\mathfrak{T}}}
+\newcommand{\mfU}{{\mathfrak{U}}}
+\newcommand{\mfV}{{\mathfrak{V}}}
+\newcommand{\mfW}{{\mathfrak{W}}}
+\newcommand{\mfX}{{\mathfrak{X}}}
+\newcommand{\mfY}{{\mathfrak{Y}}}
+\newcommand{\mfZ}{{\mathfrak{Z}}}
