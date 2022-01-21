@@ -38,3 +38,5 @@ Project Public License, either version 1.3 of this license or (at your option) a
 
 ## Thanks
 Thanks to [Notestex](https://github.com/Adhumunt/NotesTeX),[elegantbook](https://github.com/ElegantLaTeX/ElegantBook).
+
+%% Why should you avoid using (complex) templates? https://tex.stackexchange.com/questions/390683/why-should-you-avoid-using-complex-templates

@@ -1,11 +1,39 @@
-\contentsline {part}{\@mypartnumtocformat {I}{User Manual}}{2}{part.1}%
+\contentsline {part}{\@mypartnumtocformat {I}{User Manual}}{3}{part.1}%
 \ttl@starttoc {default@1}
-\contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Required Packages}{3}{section.1.1}%
-\contentsline {section}{\numberline {1.2}License}{3}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Features}{3}{section.1.3}%
-\contentsline {section}{\numberline {1.4}\TeX \ Shortcuts}{4}{section.1.4}%
-\contentsline {section}{\numberline {1.5}\texttt {amsthm} Environments}{4}{section.1.5}%
-\contentsline {subsection}{\numberline {1.5.1}\texttt {tcolorbox} Environment and Known Issues}{5}{subsection.1.5.1}%
-\contentsline {section}{\numberline {1.6}Fullpage Environment}{5}{section.1.6}%
+\contentsline {chapter}{\numberline {1}Introduction}{4}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Required Packages}{4}{section.1.1}%
+\contentsline {section}{\numberline {1.2}License}{4}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Features}{4}{section.1.3}%
+\contentsline {section}{\numberline {1.4}\TeX \ Shortcuts}{5}{section.1.4}%
+\contentsline {section}{\numberline {1.5}\texttt {amsthm} Environments}{5}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}\texttt {tcolorbox} Environment and Known Issues}{6}{subsection.1.5.1}%
+\contentsline {section}{\numberline {1.6}Fullpage Environment}{6}{section.1.6}%
+\contentsline {chapter}{\numberline {2}Test ss}{8}{chapter.2}%
+\contentsline {section}{\numberline {2.1}sdadsad}{8}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}dsadsad}{8}{subsection.2.1.1}%
+\contentsline {section}{\numberline {2.2}dsad}{9}{section.2.2}%
+\contentsline {part}{\@mypartnumtocformat {II}{very big}}{11}{part.2}%
+\ttl@stoptoc {default@1}
+\ttl@starttoc {default@2}
+\contentsline {chapter}{\numberline {3}ds dsd}{12}{chapter.3}%
+\contentsline {section}{\numberline {3.1}dsadsa}{12}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}fff}{13}{subsection.3.1.1}%
+\contentsline {section}{\numberline {3.2}dasdsa}{13}{section.3.2}%
+\contentsline {part}{\@mypartnumtocformat {III}{three}}{14}{part.3}%
+\ttl@stoptoc {default@2}
+\ttl@starttoc {default@3}
+\contentsline {chapter}{\numberline {4}[asdaf]}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}das}{15}{section.4.1}%
+\contentsline {section}{\numberline {4.2}ffsad}{15}{section.4.2}%
+\contentsline {part}{\@mypartnumtocformat {IV}{probability}}{17}{part.4}%
+\ttl@stoptoc {default@3}
+\ttl@starttoc {default@4}
+\contentsline {chapter}{\numberline {5}Pro}{18}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Review and Overview}{18}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Formulation of supervised learning}{18}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Regression problems and squared loss}{19}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Linear regression under squared loss}{19}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Parameterized families of hypotheses}{20}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Well-specified case and maximum likelihood}{20}{subsection.5.5.1}%
+\contentsline {section}{\numberline {5.6}Training loss}{21}{section.5.6}%
 \contentsfinish 

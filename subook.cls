@@ -42,7 +42,7 @@
 \usepackage{siunitx} %  Use the siunitx package to format all numbers, currencies, units, etc:
 \usepackage{makeidx} % Required to make an index
 \makeindex % Tells LaTeX to create the files required for indexing
-
+% \usepackage{tocloft} % Required for manipulating the table of contents
 % ----------------------------------------------------------------------
 %           User Top Level Packages: Additional & Styling
 % ----------------------------------------------------------------------
@@ -54,37 +54,23 @@
 \usepackage{minitoc} % Mini toc for each chapter
 \usepackage{mathtools,amsthm,amssymb,amsfonts,bm}   % Math Presets
 \usepackage{thmtools,amsmath}
-\RequirePackage[
-hidelinks,
-backref=true,
-pagebackref=true,
-hyperindex=true,
-colorlinks=false,
-breaklinks=true,
-urlcolor=ocre,
-bookmarks=true,
-bookmarksopen=false
-                % urlcolor=Maroon,
+\RequirePackage[colorlinks=true,
+                linkcolor=black,
                 % anchorcolor=Maroon,
                 citecolor=brown,
                 ]{hyperref}
-\usepackage{bookmark}
-\bookmarksetup{
-open,
-numbered,
-addtohook={%
-\ifnum\bookmarkget{level}=0 % chapter
-\bookmarksetup{bold}%
-\fi
-\ifnum\bookmarkget{level}=-1 % part
-\bookmarksetup{color=ocre,bold}%
-\fi
-}
-}
+
 % \usepackage{natbib} % 引入natbib包，参考文献格式相关
+% % \setcitestyle{authoryear,open={(},close={)}} %Citation-related commands
+% \bibliographystyle{unsrtnat}% set cite font 
 % \usepackage{chapterbib}	% 引入chapterbib包，可以分章节显示参考文献，且参考文献编号各自独立
 \usepackage{listings} % Quote
 \usepackage{caption}
+\usepackage{booktabs}
+% \usepackage[UTF8]{ctex} % For Chinese support
+\usepackage{float} % Float environment
+\usepackage{algorithm} % Algorithm
+\usepackage{algpseudocode} %  Algorithm
 
 % ----------------------------------------------------------------------
 %                            Defining Color
@@ -99,10 +85,6 @@ addtohook={%
 \definecolor{lightgrey}{rgb}{0.95,0.95,0.95}
 \definecolor{commentcolor}{RGB}{0,100,0}
 \definecolor{frenchplum}{RGB}{190,20,83}
-% \definecolor{ocre}{RGB}{243,102,25} % Define the orange color used for highlighting throughout the book
-\colorlet{ocre}{gray!65} 
-\bibliographystyle{unsrtnat}% set cite font 
-% \setcitestyle{authoryear,open={(},close={)}} %Citation-related commands
 
 % ----------------------------------------------------------------------
 %                                 Layout
@@ -139,118 +121,100 @@ addtohook={%
 %-----------------------------------------------------------------------
 %	                            TABLE OF CONTENTS
 %-----------------------------------------------------------------------
+\newcommand\BoxColor{ocre!60}
 
 %----------------------------------------------------------------------------------------
-%	MAIN TABLE OF CONTENTS
+%   MAIN TABLE OF CONTENTS
 %----------------------------------------------------------------------------------------
+\usetikzlibrary{tikzmark,calc,decorations.pathreplacing}
+\definecolor{ocre}{RGB}{51,51,51}
+\usepackage{titletoc}
+\usepackage{graphicx}
+\contentsmargin{0cm}
 
-\usepackage{titletoc} % Required for manipulating the table of contents
-
-\contentsmargin{0cm} % Removes the default margin
-%% Usage:
-%% \titlecontents{⟨section⟩}
-%%                  [⟨left⟩]
-%%                  {⟨above⟩}
-%%                  {⟨before with label⟩}
-%%                  {⟨before without label⟩} 
-%%                  {⟨filler and page⟩}
-%%                  [⟨after⟩]
-
-% Part text styling (this is mostly taken care of in the PART HEADINGS section of this file)
-\titlecontents{part}
-	[0cm] % Left indentation(whole)
-	{\addvspace{20pt}\large\sffamily\bfseries} % Spacing and font options for parts
-	{}
-	{}
-	{}
-
+% Part text styling
+\titlecontents{part}[0cm]
+{\addvspace{20pt}\centering\large\bfseries}
+{}
+{}
+{}
 
 % Chapter text styling
-\titlecontents{chapter}
-	[1.25cm] % Left indentation
-	{\addvspace{12pt}\large\sffamily\bfseries} % Spacing and font options for chapters
-	{\color{ocre!60}\contentslabel[\Large\thecontentslabel]{1.25cm}\color{ocre}} % Formatting of numbered sections of this type
-	{\color{ocre}} % Formatting of numberless sections of this type
-	{\color{ocre!60}\normalsize\;\titlerule*[.5pc]{.}\;\thecontentspage} % Formatting of the filler to the right of the heading and the page number
+\titlecontents{chapter}[1.25cm] % Indentation
+{\addvspace{12pt}\large\sffamily\bfseries} % Spacing and font options for chapters
+{\color{ocre!60}\contentslabel[\Large\thecontentslabel]{1.25cm}\color{ocre}} % Chapter number
+{\color{ocre}}
+{\color{ocre!60}\normalsize\;\titlerule*[.5pc]{.}\;\thecontentspage} % Page number
 
 % Section text styling
-\titlecontents{section}
-	[1.25cm] % Left indentation
-	{\addvspace{3pt}\sffamily\bfseries} % Spacing and font options for sections
-	{\contentslabel[\thecontentslabel]{1.25cm}} % Formatting of numbered sections of this type
-	{} % Formatting of numberless sections of this type
-	{\hfill\color{black}\thecontentspage} % Formatting of the filler to the right of the heading and the page number
+\titlecontents{section}[1.25cm] % Indentation
+{\addvspace{3pt}\sffamily\bfseries} % Spacing and font options for sections
+{\contentslabel[\thecontentslabel]{1.25cm}} % Section number
+{}
+{\hfill\color{black}\thecontentspage} % Page number
+[]
 
 % Subsection text styling
-\titlecontents{subsection}
-	[1.25cm] % Left indentation
-	{\addvspace{1pt}\sffamily\small} % Spacing and font options for subsections
-	{\contentslabel[\thecontentslabel]{1.25cm}} % Formatting of numbered sections of this type
-	{} % Formatting of numberless sections of this type
-	{\ \titlerule*[.5pc]{.}\;\thecontentspage} % Formatting of the filler to the right of the heading and the page number
+\titlecontents{subsection}[1.25cm] % Indentation
+{\addvspace{1pt}\sffamily\small} % Spacing and font options for subsections
+{\contentslabel[\thecontentslabel]{1.25cm}} % Subsection number
+{}
+{\ \titlerule*[.5pc]{.}\;\thecontentspage} % Page number
+[]
 
-% Figure text styling
-\titlecontents{figure}
-	[1.25cm] % Left indentation
-	{\addvspace{1pt}\sffamily\small} % Spacing and font options for figures
-	{\thecontentslabel\hspace*{1em}} % Formatting of numbered sections of this type
-	{} % Formatting of numberless sections of this type
-	{\ \titlerule*[.5pc]{.}\;\thecontentspage} % Formatting of the filler to the right of the heading and the page number
+% List of figures
+\titlecontents{figure}[0em]
+{\addvspace{-5pt}\sffamily}
+{\thecontentslabel\hspace*{1em}}
+{}
+{\ \titlerule*[.5pc]{.}\;\thecontentspage}
+[]
 
-% Table text styling
-\titlecontents{table}
-	[1.25cm] % Left indentation
-	{\addvspace{1pt}\sffamily\small} % Spacing and font options for tables
-	{\thecontentslabel\hspace*{1em}} % Formatting of numbered sections of this type
-	{} % Formatting of numberless sections of this type
-	{\ \titlerule*[.5pc]{.}\;\thecontentspage} % Formatting of the filler to the right of the heading and the page number
+% List of tables
+\titlecontents{table}[0em]
+{\addvspace{-5pt}\sffamily}
+{\thecontentslabel\hspace*{1em}}
+{}
+{\ \titlerule*[.5pc]{.}\;\thecontentspage}
+[]
 
 %----------------------------------------------------------------------------------------
-%	MINI TABLE OF CONTENTS IN PART HEADS
+%   SECTION NUMBERING IN THE MARGIN
 %----------------------------------------------------------------------------------------
 
-% Chapter text styling
-\titlecontents{lchapter}
-	[0em] % Left indentation
-	{\addvspace{15pt}\large\sffamily\bfseries} % Spacing and font options for chapters
-	{\color{ocre}\contentslabel[\Large\thecontentslabel]{1.25cm}\color{ocre}} % Chapter number
-	{}  
-	{\color{ocre}\normalsize\sffamily\bfseries\;\titlerule*[.5pc]{.}\;\thecontentspage} % Page number
-
-% Section text styling
-\titlecontents{lsection}
-	[0em] % Left indentation
-	{\sffamily\small} % Spacing and font options for sections
-	{\contentslabel[\thecontentslabel]{1.25cm}} % Section number
-	{}
-	{}
-
-% Subsection text styling (note these aren't shown by default, display them by searchings this file for tocdepth and reading the commented text)
-\titlecontents{lsubsection}
-	[.5em] % Left indentation
-	{\sffamily\footnotesize} % Spacing and font options for subsections
-	{\contentslabel[\thecontentslabel]{1.25cm}}
-	{}
-	{}
-
-% \newcommand{\figureintoc}[1]{
-%     \begin{figure}
-%         \includegraphics{#1}%
-%     \end{figure}
-%     }
-% Numbered part in the table of contents
 \makeatletter
+\renewcommand{\@seccntformat}[1]{\llap{\textcolor{ocre}{\csname the#1\endcsname}\hspace{1em}}}
+\renewcommand{\section}{\@startsection{section}{1}{\z@}
+{-4ex \@plus -1ex \@minus -.4ex}
+{1ex \@plus.2ex }
+{\normalfont\large\sffamily\bfseries}}
+\renewcommand{\subsection}{\@startsection {subsection}{2}{\z@}
+{-3ex \@plus -0.1ex \@minus -.4ex}
+{0.5ex \@plus.2ex }
+{\normalfont\sffamily\bfseries}}
+\renewcommand{\subsubsection}{\@startsection {subsubsection}{3}{\z@}
+{-2ex \@plus -0.1ex \@minus -.2ex}
+{.2ex \@plus.2ex }
+{\normalfont\small\sffamily\bfseries}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}
+{-2ex \@plus-.2ex \@minus .2ex}
+{.1ex}
+{\normalfont\small\sffamily\bfseries}}
+
+%----------------------------------------------------------------------------------------
+%   PART HEADINGS
+%----------------------------------------------------------------------------------------
+
+% numbered part in the table of contents
 \newcommand{\@mypartnumtocformat}[2]{%
-	\setlength\fboxsep{0pt}%
-	\noindent\colorbox{ocre!20}{\strut\parbox[c][.7cm]{\ecart}{\color{ocre!70}\Large\sffamily\bfseries\centering#1}}\hskip\esp\colorbox{ocre!40}{\strut\parbox[c][.7cm]{\linewidth-\ecart-\esp}{\Large\sffamily\centering#2}}%
-}
-
-% Unnumbered part in the table of contents
+\setlength\fboxsep{0pt}%
+\noindent\colorbox{ocre!20}{\strut\parbox[c][.7cm]{\ecart}{\color{ocre!70}\Large\sffamily\bfseries\centering#1}}\hskip\esp\colorbox{ocre!40}{\strut\parbox[c][.7cm]{\linewidth-\ecart-\esp}{\Large\sffamily\centering#2}}}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% unnumbered part in the table of contents
 \newcommand{\@myparttocformat}[1]{%
-	\setlength\fboxsep{0pt}%
-	\noindent\colorbox{ocre!40}{\strut\parbox[c][.7cm]{\linewidth}{\Large\sffamily\centering#1}}%
-}
-
+\setlength\fboxsep{0pt}%
+\noindent\colorbox{ocre!40}{\strut\parbox[c][.7cm]{\linewidth}{\Large\sffamily\centering#1}}}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newlength\esp
 \setlength\esp{4pt}
 \newlength\ecart
@@ -268,11 +232,11 @@ addtohook={%
 \markboth{}{}%
 {\thispagestyle{empty}%
 \begin{tikzpicture}[remember picture,overlay]%
-\node at (current page.north west){\begin{tikzpicture}[remember picture,overlay]%	
+\node at (current page.north west){\begin{tikzpicture}[remember picture,overlay]%   
 \fill[ocre!20](0cm,0cm) rectangle (\paperwidth,-\paperheight);
-\node[anchor=north] at (4cm,-3.25cm){\color{ocre!40}\fontsize{220}{100}\sffamily\bfseries\thepart}; 
+\node[anchor=north] at (4cm,-3.25cm){\color{ocre!40}\fontsize{220}{100}\sffamily\bfseries\@Roman\c@part};
 \node[anchor=south east] at (\paperwidth-1cm,-\paperheight+1cm){\parbox[t][][t]{8.5cm}{
-\printcontents{l}{0}{\setcounter{tocdepth}{1}}% The depth to which the Part mini table of contents displays headings; 0 for chapters only, 1 for chapters and sections and 2 for chapters, sections and subsections
+\printcontents{l}{0}{\setcounter{tocdepth}{1}}%
 }};
 \node[anchor=north east] at (\paperwidth-1.5cm,-3.25cm){\parbox[t][][t]{15cm}{\strut\raggedleft\color{white}\fontsize{30}{30}\sffamily\bfseries#2}};
 \end{tikzpicture}};
@@ -283,7 +247,7 @@ addtohook={%
 \phantomsection
 {\thispagestyle{empty}%
 \begin{tikzpicture}[remember picture,overlay]%
-\node at (current page.north west){\begin{tikzpicture}[remember picture,overlay]%	
+\node at (current page.north west){\begin{tikzpicture}[remember picture,overlay]%   
 \fill[ocre!20](0cm,0cm) rectangle (\paperwidth,-\paperheight);
 \node[anchor=north east] at (\paperwidth-1.5cm,-3.25cm){\parbox[t][][t]{15cm}{\strut\raggedleft\color{white}\fontsize{30}{30}\sffamily\bfseries#1}};
 \end{tikzpicture}};
@@ -304,12 +268,6 @@ addtohook={%
 \twocolumn
 \fi}
 
-%-----------------------------------------------------------------------
-%	                            Title Settings
-%-----------------------------------------------------------------------
-
-%% Useage: 
-%% \titleformat{command}[shape]{format}{label}{sep}{before-code}[after-code]
 %% ------------------------- Header and Footer  ------------------------
 \newcommand\graysquare{\textcolor{sectcolor}{\rule{1ex}{1ex}}}
 \newcommand{\helv}{\fontfamily{phv}\fontseries{}\fontsize{10}{12}\selectfont}
@@ -320,8 +278,9 @@ addtohook={%
 \fancyhead[RO]{\helv\rightmark\hspace{0.5em}\graysquare\hspace{0.5em}\thepage}
 \fancyhead[LE]{\helv\thepage\hspace{0.5em}\graysquare\hspace{0.5em}\leftmark}
 \renewcommand{\headrulewidth}{0pt}
-
 %% ----------------------------- Section  -------------------------------
+%% Useage: 
+%% \titleformat{command}[shape]{format}{label}{sep}{before-code}[after-code]
 \titleformat{\section}
 {\normalfont\Large\bfseries}
 {\llap{\colorbox{sectcolor}{\makebox[3em][r] {\thesection}}\hspace{1em}}}
@@ -572,7 +531,8 @@ addtohook={%
     attach boxed title to top left={yshift=-0.1mm}, boxed title style={sharp corners, colback=gray, left=0.405cm},
     rightrule=-1pt,toprule=-1pt, bottomrule=-1pt
 }
-
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{exercise}{Exercise}[section]
 %% ------------------------------ Listings  ---------------------------
 % \RequirePackage{listings}
 \renewcommand{\ttdefault}{cmtt}
@@ -644,3 +604,23 @@ addtohook={%
 \newcommand{\mfX}{{\mathfrak{X}}}
 \newcommand{\mfY}{{\mathfrak{Y}}}
 \newcommand{\mfZ}{{\mathfrak{Z}}}
+
+
+%-----------------------------------
+\newcommand{\key}[1]{\textbf{\color{main} #1}} %highlight sth
+
+%% https://tex.stackexchange.com/a/576225
+\makeatletter
+\def\logosmaller#1{%
+  \hbox{\sbox\z@ T%
+    \vbox to\ht\z@{\hbox{\check@mathfonts
+      \fontsize\sf@size\z@
+      \math@fontsfalse\selectfont #1}\vss}}}
+\newcommand\lecture{%
+  L\kern-.2em%
+  \logosmaller{E}\kern-.1em%
+  C\kern-.2em%
+  \raise0.5ex\hbox{T}\kern-.23em%
+  \hbox{U}\kern-.1em%
+  \lower0.1ex\logosmaller{R}\kern-.1em%
+  E\@}
