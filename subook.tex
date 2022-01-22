@@ -1,6 +1,7 @@
 \documentclass[]{subook}
 % \usepackage{showframe}
-
+\usepackage{graphicx}
+\usepackage{subcaption}
 
 \begin{document}
 \pagestyle{empty}
@@ -43,7 +44,7 @@ PUBLISHED IN THE WILD
 % \maketitle
 
 % \pagestyle{empty} % Disable headers and footers for the following pages
-% \dominitoc% Initialization
+\dominitoc% Initialization
 
 
 \tableofcontents % Print the table of contents itself
@@ -72,7 +73,6 @@ the package \texttt{geometry} is used globally to set the page width, page heigh
 and margin width, and finally, \texttt{fancyhdr}, 
 which is overridden on the title page, 
 the contents page, and the \texttt{$\backslash$part} page, sets the header for the body.
-
 
 
 \section{License}\label{sec:license}

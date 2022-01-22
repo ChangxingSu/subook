@@ -139,6 +139,7 @@
 {}
 {}
 
+
 % Chapter text styling
 \titlecontents{chapter}[1.25cm] % Indentation
 {\addvspace{12pt}\large\sffamily\bfseries} % Spacing and font options for chapters
@@ -201,72 +202,121 @@
 {.1ex}
 {\normalfont\small\sffamily\bfseries}}
 
+
+% \makeatletter
+% \titleformat{\part}[display]
+%   {\Huge\scshape\filright}
+%   {\partname~\thepart:}
+%   {20pt}
+% \makeatother
+% \setlength\epigraphwidth{.6\textwidth}
+
 %----------------------------------------------------------------------------------------
 %   PART HEADINGS
 %----------------------------------------------------------------------------------------
 
 % numbered part in the table of contents
 \newcommand{\@mypartnumtocformat}[2]{%
-\setlength\fboxsep{0pt}%
-\noindent\colorbox{ocre!20}{\strut\parbox[c][.7cm]{\ecart}{\color{ocre!70}\Large\sffamily\bfseries\centering#1}}\hskip\esp\colorbox{ocre!40}{\strut\parbox[c][.7cm]{\linewidth-\ecart-\esp}{\Large\sffamily\centering#2}}}%
+    \setlength
+    \fboxsep{0pt}%
+    \noindent\colorbox{black!20}{\strut\parbox[c][.7cm]{\ecart}{\color{black!70}\Large\sffamily\bfseries\centering#1}}\hskip\esp\colorbox{black!40}{\strut\parbox[c][.7cm]{\linewidth-\ecart-\esp}{\Large\sffamily\centering#2}}
+}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % unnumbered part in the table of contents
 \newcommand{\@myparttocformat}[1]{%
 \setlength\fboxsep{0pt}%
 \noindent\colorbox{ocre!40}{\strut\parbox[c][.7cm]{\linewidth}{\Large\sffamily\centering#1}}}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newlength\esp
 \setlength\esp{4pt}
 \newlength\ecart
 \setlength\ecart{1.2cm-\esp}
+
 \newcommand{\thepartimage}{}%
-\newcommand{\partimage}[1]{\renewcommand{\thepartimage}{#1}}%
+
+\newcommand{\partimage}[1]{
+    \renewcommand{\thepartimage}{#1}}%
+
 \def\@part[#1]#2{%
-\ifnum \c@secnumdepth >-2\relax%
-\refstepcounter{part}%
-\addcontentsline{toc}{part}{\texorpdfstring{\protect\@mypartnumtocformat{\thepart}{#1}}{\partname~\thepart\ ---\ #1}}
-\else%
-\addcontentsline{toc}{part}{\texorpdfstring{\protect\@myparttocformat{#1}}{#1}}%
-\fi%
-\startcontents%
-\markboth{}{}%
-{\thispagestyle{empty}%
-\begin{tikzpicture}[remember picture,overlay]%
-\node at (current page.north west){\begin{tikzpicture}[remember picture,overlay]%   
-\fill[ocre!20](0cm,0cm) rectangle (\paperwidth,-\paperheight);
-\node[anchor=north] at (4cm,-3.25cm){\color{ocre!40}\fontsize{220}{100}\sffamily\bfseries\@Roman\c@part};
-\node[anchor=south east] at (\paperwidth-1cm,-\paperheight+1cm){\parbox[t][][t]{8.5cm}{
-\printcontents{l}{0}{\setcounter{tocdepth}{1}}%
-}};
-\node[anchor=north east] at (\paperwidth-1.5cm,-3.25cm){\parbox[t][][t]{15cm}{\strut\raggedleft\color{white}\fontsize{30}{30}\sffamily\bfseries#2}};
-\end{tikzpicture}};
-\end{tikzpicture}}%
-\@endpart}
-\def\@spart#1{%
-\startcontents%
-\phantomsection
-{\thispagestyle{empty}%
-\begin{tikzpicture}[remember picture,overlay]%
-\node at (current page.north west){\begin{tikzpicture}[remember picture,overlay]%   
-\fill[ocre!20](0cm,0cm) rectangle (\paperwidth,-\paperheight);
-\node[anchor=north east] at (\paperwidth-1.5cm,-3.25cm){\parbox[t][][t]{15cm}{\strut\raggedleft\color{white}\fontsize{30}{30}\sffamily\bfseries#1}};
-\end{tikzpicture}};
-\end{tikzpicture}}
-\addcontentsline{toc}{part}{\texorpdfstring{%
-\setlength\fboxsep{0pt}%
-\noindent\protect\colorbox{ocre!40}{\strut\protect\parbox[c][.7cm]{\linewidth}{\Large\sffamily\protect\centering #1\quad\mbox{}}}}{#1}}%
-\@endpart}
-\def\@endpart{\vfil\newpage
-\if@twoside
-\if@openright
-\null
-\thispagestyle{empty}%
-\newpage
-\fi
-\fi
-\if@tempswa
-\twocolumn
-\fi}
+    \ifnum \c@secnumdepth >-2\relax%
+        \refstepcounter{part}%
+        \addcontentsline{toc}{part}{\texorpdfstring{\protect\@mypartnumtocformat{\thepart}{#1}}{\partname~\thepart\ ---\ #1}}
+    \else%
+    \addcontentsline{toc}{part}{\texorpdfstring{\protect\@myparttocformat{#1}}{#1}}%
+    \fi%
+
+    \startcontents%
+    \markboth{}{}%
+    \thispagestyle{empty}%
+    % \begin{tikzpicture}[remember picture,overlay]%
+    %     \node at (current page.north west){
+    %         \begin{tikzpicture}[remember picture,overlay]%   
+    %         \fill[ocre!20](0cm,0cm) rectangle (\paperwidth,-\paperheight);
+    %         \node[anchor=north] at (4cm,-3.25cm)
+    %         {
+    %             \color{ocre!40}\fontsize{220}{100}\sffamily\bfseries\@Roman\c@part
+    %         };
+    %         \node[anchor=south east] at (\paperwidth-1cm,-\paperheight+1cm)
+    %         {
+    %             \parbox[t][][t]{8.5cm}{
+    %                 \printcontents{l}{0}{\setcounter{tocdepth}{1}}%
+    %             }
+    %         };
+    %         \node[anchor=north east] at (\paperwidth-1.5cm,-3.25cm)
+    %         {
+    %             \parbox[t][][t]{15cm}{
+    %                 \strut\raggedleft\color{white}\fontsize{30}{30}\sffamily\bfseries#2}
+    %         };
+    %         \end{tikzpicture}
+    %     };
+    % \end{tikzpicture}
+    % }%
+\@endpart
+}
+
+
+
+% \def\@spart#1{%
+%     \startcontents%
+%     \phantomsection{
+%         \thispagestyle{empty}%
+%         \begin{tikzpicture}[remember picture,overlay]%
+%             \node at (current page.north west)
+%             {
+%                 \begin{tikzpicture}[remember picture,overlay]%   
+%                     \fill[ocre!20](0cm,0cm) rectangle (\paperwidth,-\paperheight);
+%                     \node[anchor=north east] at (\paperwidth-1.5cm,-3.25cm){
+%                         \parbox[t][][t]{15cm}{\strut\raggedleft\color{white}\fontsize{30}{30}\sffamily\bfseries#1}
+%                     };
+%                 \end{tikzpicture}};
+%         \end{tikzpicture}
+%     }
+
+%     \addcontentsline{toc}{part}{\texorpdfstring
+%     {%
+%         \setlength\fboxsep{0pt}%
+%         \noindent\protect\colorbox{ocre!40}{
+%             \strut\protect\parbox[c][.7cm]{\linewidth}{\Large\sffamily\protect\centering #1\quad\mbox{}}
+%         }
+%     }{#1}}%
+%     \@endpart
+% }
+
+% \def\@endpart
+% {
+%     \vfil\newpage
+%         \if@twoside
+%         \if@openright
+%             \null
+%             \thispagestyle{empty}%
+%         \newpage
+%         \fi
+%     \fi
+%     \if@tempswa
+%         \twocolumn
+%     \fi
+% }
 
 %% ------------------------- Header and Footer  ------------------------
 \newcommand\graysquare{\textcolor{sectcolor}{\rule{1ex}{1ex}}}
