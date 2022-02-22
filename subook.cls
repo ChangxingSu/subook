@@ -23,19 +23,28 @@
 % ----------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{subook}[2021/12/27 SUper LaTeX book class]
-\LoadClass[openany]{book}% here we use openany option to  remove a blank page that gets added automatically after \part{}
+\LoadClass[12pt,openany]{book}% here we use openany option to  remove a blank page that gets added automatically after \part{}
 
 % ----------------------------------------------------------------------
 %                   User Top Level Packages: Required
 % ----------------------------------------------------------------------
+\usepackage{varioref}
 
 \usepackage{marginnote, % Margin note
             % sidenotes,
             fancyhdr, % Header and footer 
             geometry, % Required for adjusting page dimensions and margins
             }
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{xparse} % Parse arguments for macros
+\usepackage{blindtext} % Exam the template
+\usepackage{xpatch} % Patch LaTeX code in external packages
+\usepackage{fontspec} % Change the font
+\usepackage{libertine} % Libertin font
 \usepackage[explicit]{titlesec} % Title setion
 \usepackage{xcolor} % Get color
+\usepackage{sidenotes}
 \usepackage[many]{tcolorbox} % Colorful Box
 \usepackage{tikz} % Drawing Picture
 \usetikzlibrary{calc}
@@ -51,7 +60,7 @@
             etoolbox
             }
 \usepackage{lipsum} % Random words
-\usepackage{minitoc} % Mini toc for each chapter
+% \usepackage{minitoc} % Mini toc for each chapter
 \usepackage{mathtools,amsthm,amssymb,amsfonts,bm}   % Math Presets
 \usepackage{thmtools,amsmath}
 \RequirePackage[colorlinks=true,
@@ -59,7 +68,12 @@
                 % anchorcolor=Maroon,
                 citecolor=brown,
                 ]{hyperref}
-
+\usepackage[
+  style=gb7714-2015,
+    autocite=footnote,
+    backend=bibtex
+  ]{biblatex}
+\setmonofont[Scale=MatchLowercase]{DejaVu Sans Mono}
 % \usepackage{natbib} % 引入natbib包，参考文献格式相关
 % % \setcitestyle{authoryear,open={(},close={)}} %Citation-related commands
 % \bibliographystyle{unsrtnat}% set cite font 
@@ -67,6 +81,7 @@
 \usepackage{listings} % Quote
 \usepackage{caption}
 \usepackage{booktabs}
+\usepackage{tabularx}
 % \usepackage[UTF8]{ctex} % For Chinese support
 \usepackage{float} % Float environment
 \usepackage{algorithm} % Algorithm
@@ -95,12 +110,26 @@
         top=2cm,% Top margin
         bottom=1.5cm, % Bottom margin
         right=6cm, %Right margin
-        left=1.5cm,% Left margin        
+        left=1.5cm,% Left margin    
         textheight=0.3cm,
         marginparwidth=5cm,
         marginparsep=0.5cm,
         asymmetric, % Make marginnote always right
         %showframe, % Uncomment to show how the type block is set on the page
+}
+
+
+\newcommand{\fullwidthpage}{%
+	\newgeometry{
+    paper=a4paper,
+		top=27.4mm,
+		bottom=27.4mm,
+		inner=24.8mm,
+		outer=24.8mm,
+		marginparwidth=0mm,
+		marginparsep=0mm,
+	}%
+    % \recalchead%
 }
 
 
@@ -140,12 +169,12 @@
 {}
 
 
-% Chapter text styling
-\titlecontents{chapter}[1.25cm] % Indentation
-{\addvspace{12pt}\large\sffamily\bfseries} % Spacing and font options for chapters
-{\color{ocre!60}\contentslabel[\Large\thecontentslabel]{1.25cm}\color{ocre}} % Chapter number
-{\color{ocre}}
-{\color{ocre!60}\normalsize\;\titlerule*[.5pc]{.}\;\thecontentspage} % Page number
+% % Chapter text styling
+% \titlecontents{chapter}[1.25cm] % Indentation
+% {\addvspace{12pt}\large\sffamily\bfseries} % Spacing and font options for chapters
+% {\color{ocre!60}\contentslabel[\Large\thecontentslabel]{1.25cm}\color{ocre}} % Chapter number
+% {\color{ocre}}
+% {\color{ocre!60}\normalsize\;\titlerule*[.5pc]{.}\;\thecontentspage} % Page number
 
 % Section text styling
 \titlecontents{section}[1.25cm] % Indentation
@@ -155,13 +184,15 @@
 {\hfill\color{black}\thecontentspage} % Page number
 []
 
-% Subsection text styling
-\titlecontents{subsection}[1.25cm] % Indentation
-{\addvspace{1pt}\sffamily\small} % Spacing and font options for subsections
-{\contentslabel[\thecontentslabel]{1.25cm}} % Subsection number
-{}
-{\ \titlerule*[.5pc]{.}\;\thecontentspage} % Page number
-[]
+% % Subsection text styling
+% \titlecontents{subsection}[1.25cm] % Indentation
+% {\addvspace{1pt}\sffamily\small} % Spacing and font options for subsections
+% {\contentslabel[\thecontentslabel]{1.25cm}} % Subsection number
+% {}
+% {\ \titlerule*[.5pc]{.}\;\thecontentspage} % Page number
+% []
+
+
 
 % List of figures
 \titlecontents{figure}[0em]
@@ -183,25 +214,47 @@
 %   SECTION NUMBERING IN THE MARGIN
 %----------------------------------------------------------------------------------------
 
-\makeatletter
-\renewcommand{\@seccntformat}[1]{\llap{\textcolor{ocre}{\csname the#1\endcsname}\hspace{1em}}}
-\renewcommand{\section}{\@startsection{section}{1}{\z@}
-{-4ex \@plus -1ex \@minus -.4ex}
-{1ex \@plus.2ex }
-{\normalfont\large\sffamily\bfseries}}
-\renewcommand{\subsection}{\@startsection {subsection}{2}{\z@}
-{-3ex \@plus -0.1ex \@minus -.4ex}
-{0.5ex \@plus.2ex }
-{\normalfont\sffamily\bfseries}}
-\renewcommand{\subsubsection}{\@startsection {subsubsection}{3}{\z@}
-{-2ex \@plus -0.1ex \@minus -.2ex}
-{.2ex \@plus.2ex }
-{\normalfont\small\sffamily\bfseries}}
-\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}
-{-2ex \@plus-.2ex \@minus .2ex}
-{.1ex}
-{\normalfont\small\sffamily\bfseries}}
+% \makeatletter
+% \renewcommand{\@seccntformat}[1]{\llap{\textcolor{ocre}{\csname the#1\endcsname}\hspace{1em}}}
+% \renewcommand{\section}{\@startsection{section}{1}{\z@}
+% {-4ex \@plus -1ex \@minus -.4ex}
+% {1ex \@plus.2ex }
+% {\normalfont\large\sffamily\bfseries}}
+% \renewcommand{\subsection}{\@startsection {subsection}{2}{\z@}
+% {-3ex \@plus -0.1ex \@minus -.4ex}
+% {0.5ex \@plus.2ex }
+% {\normalfont\sffamily\bfseries}}
+% \renewcommand{\subsubsection}{\@startsection {subsubsection}{3}{\z@}
+% {-2ex \@plus -0.1ex \@minus -.2ex}
+% {.2ex \@plus.2ex }
+% {\normalfont\small\sffamily\bfseries}}
+% \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}
+% {-2ex \@plus-.2ex \@minus .2ex}
+% {.1ex}
+% {\normalfont\small\sffamily\bfseries}}
 
+% \newbibmacro{sidecite}{%
+%   \printnames{labelname}%
+%   \setunit{\printdelim{nametitledelim}}%
+%   \printfield[citetitle]{labeltitle}%
+%   \setunit{\addperiod\space}%
+%   \printfield{year}}
+
+% \makeatletter
+% \DeclareCiteCommand{\cbx@textcite}
+%   {\usebibmacro{textcite:init}}
+%   {\usebibmacro{citeindex}%
+%    \usebibmacro{textcite}%
+%    \setunit{}%
+%    \marginpar{\usebibmacro{sidecite}}%
+%    \setunit{%
+%      \ifbool{cbx:parens}
+%        {\bibcloseparen\global\boolfalse{cbx:parens}}
+%        {}%
+%      \textcitedelim}}
+%   {}
+%   {\usebibmacro{textcite:postnote}}
+% \makeatother
 
 % \makeatletter
 % \titleformat{\part}[display]
@@ -215,65 +268,133 @@
 %   PART HEADINGS
 %----------------------------------------------------------------------------------------
 
-% numbered part in the table of contents
-\newcommand{\@mypartnumtocformat}[2]{%
-    \setlength
-    \fboxsep{0pt}%
-    \noindent\colorbox{black!20}{\strut\parbox[c][.7cm]{\ecart}{\color{black!70}\Large\sffamily\bfseries\centering#1}}\hskip\esp\colorbox{black!40}{\strut\parbox[c][.7cm]{\linewidth-\ecart-\esp}{\Large\sffamily\centering#2}}
+
+
+% % numbered part in the table of contents
+% \newcommand{\@mypartnumtocformat}[2]{%
+%     \setlength
+%     \fboxsep{0pt}%
+%     \noindent\colorbox{black!20}{\strut\parbox[c][.7cm]{\ecart}{\color{black!70}\Large\sffamily\bfseries\centering#1}}\hskip\esp\colorbox{black!40}{\strut\parbox[c][.7cm]{\linewidth-\ecart-\esp}{\Large\sffamily\centering#2}}
+% }%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % unnumbered part in the table of contents
+% \newcommand{\@myparttocformat}[1]{%
+% \setlength\fboxsep{0pt}%
+% \noindent\colorbox{ocre!40}{\strut\parbox[c][.7cm]{\linewidth}{\Large\sffamily\centering#1}}}%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \newlength\esp
+% \setlength\esp{4pt}
+% \newlength\ecart
+% \setlength\ecart{1.2cm-\esp}
+
+% \newcommand{\thepartimage}{}%
+
+% \newcommand{\partimage}[1]{
+%     \renewcommand{\thepartimage}{#1}}%
+
+% \def\@part[#1]#2{%
+%     \ifnum \c@secnumdepth >-2\relax%
+%         \refstepcounter{part}%
+%         \addcontentsline{toc}{part}{\texorpdfstring{\protect\@mypartnumtocformat{\thepart}{#1}}{\partname~\thepart\ ---\ #1}}
+%     \else%
+%     \addcontentsline{toc}{part}{\texorpdfstring{\protect\@myparttocformat{#1}}{#1}}%
+%     \fi%
+
+%     \startcontents%
+%     \markboth{}{}%
+%     \thispagestyle{empty}%
+%     % \begin{tikzpicture}[remember picture,overlay]%
+%     %     \node at (current page.north west){
+%     %         \begin{tikzpicture}[remember picture,overlay]%   
+%     %         \fill[ocre!20](0cm,0cm) rectangle (\paperwidth,-\paperheight);
+%     %         \node[anchor=north] at (4cm,-3.25cm)
+%     %         {
+%     %             \color{ocre!40}\fontsize{220}{100}\sffamily\bfseries\@Roman\c@part
+%     %         };
+%     %         \node[anchor=south east] at (\paperwidth-1cm,-\paperheight+1cm)
+%     %         {
+%     %             \parbox[t][][t]{8.5cm}{
+%     %                 \printcontents{l}{0}{\setcounter{tocdepth}{1}}%
+%     %             }
+%     %         };
+%     %         \node[anchor=north east] at (\paperwidth-1.5cm,-3.25cm)
+%     %         {
+%     %             \parbox[t][][t]{15cm}{
+%     %                 \strut\raggedleft\color{white}\fontsize{30}{30}\sffamily\bfseries#2}
+%     %         };
+%     %         \end{tikzpicture}
+%     %     };
+%     % \end{tikzpicture}
+%     % }%
+% \@endpart
+% }
+
+
+
+
+%----------------------------------------------------------------------------------------
+%   CHAPTER HEADINGS
+%----------------------------------------------------------------------------------------
+\newlength{\myoddoffset}%
+\setlength{\myoddoffset}{\marginparwidth + \marginparsep}%
+\fancypagestyle{fancychapt}{%
+  \fancyhf{}%
+  \fancyfootoffset[rh]{\myoddoffset}%
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyfoot[L]{\footnotesize \thepage}%
 }%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% unnumbered part in the table of contents
-\newcommand{\@myparttocformat}[1]{%
-\setlength\fboxsep{0pt}%
-\noindent\colorbox{ocre!40}{\strut\parbox[c][.7cm]{\linewidth}{\Large\sffamily\centering#1}}}%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
 
-\newlength\esp
-\setlength\esp{4pt}
-\newlength\ecart
-\setlength\ecart{1.2cm-\esp}
+% Here we use 'numberless' key to set different numbered (without this key) and unnumbered (with numberless) variants
+\titleformat{\chapter}[hang]{{\thispagestyle{fancychapt}}\Huge\bfseries}{\color{\Partcolor}#1  \marginnote{
+  \begin{tcolorbox}[width=\marginparwidth,height=\marginparwidth/2,colback=\Partcolor,colframe=\Partcolor,center title,fonttitle=\bfseries\normalsize,title=\chaptertitlename,text fill]
+    \begin{center}
+    {\color{white}{\thechapter}}
+    \end{center}
+  \end{tcolorbox}
+}[-1.5in]}{0pt}{\sffamily\Huge\bfseries}{}
 
-\newcommand{\thepartimage}{}%
+\titleformat{name=\chapter,numberless}[block]{\normalfont\Huge\bfseries}{}{0pt}{#1}[\addcontentsline{toc}{chapter}{#1}]
 
-\newcommand{\partimage}[1]{
-    \renewcommand{\thepartimage}{#1}}%
+% \titleformat{\section}
+% {\normalfont\Large\bfseries}
+% {\llap{\colorbox{sectcolor}{\makebox[3.5em][r] {\thesection}}\hspace{0.5em}}}
+% {0em}{#1}
 
-\def\@part[#1]#2{%
-    \ifnum \c@secnumdepth >-2\relax%
-        \refstepcounter{part}%
-        \addcontentsline{toc}{part}{\texorpdfstring{\protect\@mypartnumtocformat{\thepart}{#1}}{\partname~\thepart\ ---\ #1}}
-    \else%
-    \addcontentsline{toc}{part}{\texorpdfstring{\protect\@myparttocformat{#1}}{#1}}%
-    \fi%
+% \let\oldchapter\chapter
+% \makeatletter
+% \newcounter{@chaptnumdepth}
+% \RenewDocumentCommand{\chapter}{s o m}{%
+%   \IfBooleanTF{#1}
+%     {\setcounter{@chaptnumdepth}{\value{chaptnumdepth}}% Store secnumdepth
+%      \setcounter{chaptnumdepth}{0}% Print only up to \chapter numbers
+%      \oldchapter{#3}% \section*
+%      \setcounter{chaptnumdepth}{\value{@chaptnumdepth}}}% Restore secnumdepth
+%     {\IfValueTF{#2}% \section
+%        {\oldchapter[#2]{#3}}% \section[.]{..}
+%        {\oldchapter{#3}}}% \section{..}
+% }
+% \makeatother
 
-    \startcontents%
-    \markboth{}{}%
-    \thispagestyle{empty}%
-    % \begin{tikzpicture}[remember picture,overlay]%
-    %     \node at (current page.north west){
-    %         \begin{tikzpicture}[remember picture,overlay]%   
-    %         \fill[ocre!20](0cm,0cm) rectangle (\paperwidth,-\paperheight);
-    %         \node[anchor=north] at (4cm,-3.25cm)
-    %         {
-    %             \color{ocre!40}\fontsize{220}{100}\sffamily\bfseries\@Roman\c@part
-    %         };
-    %         \node[anchor=south east] at (\paperwidth-1cm,-\paperheight+1cm)
-    %         {
-    %             \parbox[t][][t]{8.5cm}{
-    %                 \printcontents{l}{0}{\setcounter{tocdepth}{1}}%
-    %             }
-    %         };
-    %         \node[anchor=north east] at (\paperwidth-1.5cm,-3.25cm)
-    %         {
-    %             \parbox[t][][t]{15cm}{
-    %                 \strut\raggedleft\color{white}\fontsize{30}{30}\sffamily\bfseries#2}
-    %         };
-    %         \end{tikzpicture}
-    %     };
-    % \end{tikzpicture}
-    % }%
-\@endpart
-}
+
+% \titleformat{\subsubsection}{\normalfont\normalsize\bfseries\color{\Partcolor}}
+
+% \makeatletter
+% \global\let\colorchapter\chapter
+% \global\let\chapter\oldchapter
+% \makeatother
+% \newcounter{ToCPart}
+% \let\old@l@part\l@part
+% \let\old@l@\appendix\l@\appendix
+% \renewcommand{\l@\appendix}{%
+%   \stepcounter{part}%
+%   \old@l@\appendix
+% }
+
+% \renewcommand{\l@chapter}[2]{%
+%   \old@l@chapter{\color{\Partcolor}#1}{#2}}
+
 
 
 
@@ -333,13 +454,105 @@
 %% \titleformat{command}[shape]{format}{label}{sep}{before-code}[after-code]
 \titleformat{\section}
 {\normalfont\Large\bfseries}
-{\llap{\colorbox{sectcolor}{\makebox[3em][r] {\thesection}}\hspace{1em}}}
+{\llap{\colorbox{sectcolor}{\makebox[3.5em][r] {\thesection}}\hspace{0.5em}}}
 {0em}{#1}
 
+
+
+
+\titleformat{\subsubsection}
+{\color{\Partcolor}\normalfont\normalsize\bfseries}
+{\color{\Partcolor}\thesubsubsection}{1em}{#1}
+
+
+% \titleformat{\paragraph}{\normalfont\normalsize\bfseries\color{\Partcolor}}{}{}{#1}{}
 
 % ----------------------------------------------------------------------
 %                         User Created Environments 
 % ----------------------------------------------------------------------
+
+%% ------------------------------ Marginnote  ----------------------------
+\makeatletter
+\long\def\@mn@@@marginnote[#1]#2[#3]{%
+  \begingroup
+    \ifmmode\mn@strut\let\@tempa\mn@vadjust\else
+      \if@inlabel\leavevmode\fi
+      \ifhmode\mn@strut\let\@tempa\mn@vadjust\else\let\@tempa\mn@vlap\fi
+    \fi
+    \@tempa{%
+      \vbox to\z@{%
+        \vss
+        \@mn@margintest
+        \if@reversemargin\if@tempswa
+            \@tempswafalse
+          \else
+            \@tempswatrue
+        \fi\fi
+        %\if@tempswa
+          \rlap{%
+            \if@mn@verbose
+              \PackageInfo{marginnote}{xpos seems to be \@mn@currxpos}%
+            \fi
+            \begingroup
+              \ifx\@mn@currxpos\relax\else\ifx\@mn@currxpos\@empty\else
+                  \kern-\dimexpr\@mn@currxpos\relax
+              \fi\fi
+              \ifx\@mn@currpage\relax
+                \let\@mn@currpage\@ne
+              \fi
+              \if@twoside\ifodd\@mn@currpage\relax
+                  \kern\oddsidemargin
+                \else
+                  \kern\evensidemargin
+                \fi
+              \else
+                \kern\oddsidemargin
+              \fi
+              \kern 1in
+            \endgroup
+            \kern\marginnotetextwidth\kern\marginparsep
+            \vbox to\z@{\kern\marginnotevadjust\kern #3
+              \vbox to\z@{%
+                \hsize\marginparwidth
+                \linewidth\hsize
+                \kern-\parskip
+                \marginfont\raggedrightmarginnote\strut\hspace{\z@}%
+                \ignorespaces#2\endgraf
+                \vss}%
+              \vss}%
+          }%
+      }%
+    }%
+  \endgroup
+}
+\makeatother
+
+\newcommand{\mn}[1]{\marginnote{\normalfont\footnotesize #1}}
+\newcommand{\sn}[1]{\sidenote{\footnotesize #1}}
+%% ------------------------------ Caption  ----------------------------
+
+%% caption number colored
+\captionsetup[figure]{labelfont={color=main},font={footnotesize,color=gray!55!black}}
+\captionsetup[table]{labelfont={color=main}}
+%% caption x-x
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+\renewcommand{\thetable}{\thechapter-\arabic{table}}
+%% https://tex.stackexchange.com/questions/69595/marginnote-always-on-right-side-of-the-page
+
+%% caption in margin
+\newcommand{\sidebysidecaption}[4]{%
+\captionsetup{justification=raggedright}%
+  \begin{minipage}[t]{#1}
+    \vspace*{0pt}
+    #3
+  \end{minipage}
+  \hfill%
+  \begin{minipage}[t]{#2}
+    \vspace*{0pt}
+    #4
+\end{minipage}%
+}
+%% https://tex.stackexchange.com/a/388469
 
 
 %% ------------------------------ Epigraph  ----------------------------
@@ -674,3 +887,121 @@
   \hbox{U}\kern-.1em%
   \lower0.1ex\logosmaller{R}\kern-.1em%
   E\@}
+
+
+% Commands to print specific words always in the same way
+% TODO: in \Command, automatically escape braces {} and replace backslashes with \textbackslash
+\newcommand{\Class}[1]{\texttt{#1}}
+\newcommand{\Package}[1]{\texttt{#1}}
+\newcommand{\Option}[1]{\texttt{#1}}
+\newcommand{\Command}[1]{\texttt{#1}}
+\newcommand{\Environment}[1]{\texttt{#1}}
+\newcommand{\Path}[1]{\texttt{#1}}
+
+
+
+%% item
+\renewcommand{\labelitemi}{\small$\blacktriangleright$}
+\renewcommand{\labelitemii}{\textbullet}
+\RequirePackage{enumitem}
+
+\setlist[itemize]{noitemsep}
+\setlist[enumerate]{noitemsep}
+\setlist[description]{noitemsep}
+
+
+
+\newcommand{\sectionnameshort}{Sec.}
+
+% Labelling commands
+\newcommand{\labpage}[1]{\label{page:#1}}
+\newcommand{\labpart}[1]{\label{part:#1}}
+\newcommand{\labch}[1]{\label{ch:#1}}
+\newcommand{\labsec}[1]{\label{sec:#1}}
+\newcommand{\labsubsec}[1]{\label{subsec:#1}}
+\newcommand{\labfig}[1]{\label{fig:#1}}
+\newcommand{\labtab}[1]{\label{tab:#1}}
+\newcommand{\labeq}[1]{\label{eq:#1}}
+\newcommand{\labdef}[1]{\label{def:#1}}
+\newcommand{\labthm}[1]{\label{thm:#1}}
+\newcommand{\labassum}[1]{\label{assum:#1}}
+\newcommand{\labprop}[1]{\label{prop:#1}}
+\newcommand{\lablemma}[1]{\label{lemma:#1}}
+\newcommand{\labremark}[1]{\label{remark:#1}}
+\newcommand{\labexample}[1]{\label{example:#1}}
+\newcommand{\labexercise}[1]{\label{exercise:#1}}
+
+
+% Referencing commands
+\newcommand{\refpage}[1]{\hyperref[#1]{\pagename}\xspace\pageref{page:#1}} % Page 84
+\newcommand{\vrefpage}[1]{\vpageref*{page:#1}} % on the following page, on page 84
+
+% For unnumbered parts
+\newcommand{\arefpart}[1]{\hyperref[part:#1]{\partname}\xspace`\nameref{part:#1}'} % Part `Name of the Part'
+\newcommand{\avrefpart}[1]{\hyperref[part:#1]{\partname}\xspace`\nameref{part:#1}' \vpageref{part:#1}} % Part `Name of the Part' on page 84
+
+% For numbered parts
+\newcommand{\refpart}[1]{\hyperref[part:#1]{\partname}\xspace\ref{part:#1}} % Part IV
+\newcommand{\vrefpart}[1]{\hyperref[part:#1]{\partname}\xspace\vref{part:#1}} % Part IV, Part IV on the following page, Part IV on page 84
+\newcommand{\nrefpart}[1]{\hyperref[part:#1]{\partname}\xspace\ref{part:#1} (\nameref{part:#1})}
+\newcommand{\frefpart}[1]{\hyperref[part:#1]{\partname\xspace\ref{part:#1} (\nameref{part:#1}) \vpageref{part:#1}}} % Part IV (Name of the Part), Part IV (Name of the Part) on the following page, Part IV (Name of the Part) on page 84)
+
+%\newcommand{\refch}[1]{\hyperref[#1]{\chaptername\xspace\usekomafont{chapter}\normalsize\nameref{ch:#1}}\xspace\vpageref{ch:#1}\,}
+\newcommand{\refchshort}[1]{\hyperref[ch:#1]{\chapternameshort\xspace\ref{ch:#1}}}
+\newcommand{\refch}[1]{\hyperref[ch:#1]{\chaptername\xspace\ref{ch:#1}}}
+\newcommand{\vrefch}[1]{\hyperref[ch:#1]{\chaptername\xspace\ref{ch:#1} \vpageref{ch:#1}}}
+\newcommand{\nrefch}[1]{\hyperref[ch:#1]{\chaptername\xspace\ref{ch:#1} (\nameref{ch:#1})}}
+\newcommand{\frefch}[1]{\hyperref[ch:#1]{\chaptername\xspace\ref{ch:#1} (\nameref{ch:#1}) \vpageref{ch:#1}}}
+
+%\newcommand{\refsec}[1]{Section~{\usekomafont{section}\normalsize\nameref{sec:#1}}\xspace\vpageref{sec:#1}\,}
+\newcommand{\refsecshort}[1]{\hyperref[sec:#1]{\sectionnameshort\xspace\ref{sec:#1}}}
+\newcommand{\refsec}[1]{\hyperref[sec:#1]{\sectionname\xspace\ref{sec:#1}}}
+\newcommand{\vrefsec}[1]{\hyperref[sec:#1]{\sectionname\xspace\vref{sec:#1}}}
+\newcommand{\nrefsec}[1]{\hyperref[sec:#1]{\sectionname\xspace\ref{sec:#1} (\nameref{sec:#1})}}
+\newcommand{\frefsec}[1]{\hyperref[sec:#1]{\sectionname\xspace\ref{sec:#1} (\nameref{sec:#1}) \vpageref{sec:#1}}}
+
+\newcommand{\refsubsecshort}[1]{\hyperref[subsec:#1]{\sectionnameshort\xspace\ref{subsec:#1}}}
+\newcommand{\refsubsec}[1]{\hyperref[subsec:#1]{\subsectionname\xspace\ref{subsec:#1}}}
+\newcommand{\vrefsubsec}[1]{\hyperref[subsec:#1]{\subsectionname\xspace\vref{subsec:#1}}}
+\newcommand{\nrefsubsec}[1]{\hyperref[subsec:#1]{\subsectionname\xspace\ref{subsec:#1} (\nameref{subsec:#1})}}
+\newcommand{\frefsubsec}[1]{\hyperref[subsec:#1]{\subsectionname\xspace\ref{subsec:#1} (\nameref{subsec:#1}) \vpageref{subsec:#1}}}
+
+%\newcommand{\reffig}[1]{{\hypersetup{colorlinks=false}\usekomafont{captionlabel}\hyperref[fig:#1]{Figure}\xspace\ref{fig:#1}}}
+\newcommand{\reffigshort}[1]{\hyperref[fig:#1]{\figurenameshort\xspace\ref{fig:#1}}}
+\newcommand{\reffig}[1]{\hyperref[fig:#1]{\figurename}\xspace\ref{fig:#1}}
+\newcommand{\vreffig}[1]{\hyperref[fig:#1]{\figurename\xspace\vref{fig:#1}}}
+
+%\newcommand{\reftab}[1]{{\hypersetup{colorlinks=false}\usekomafont{captionlabel}\hyperref[tab:#1]{Table}\xspace\ref{tab:#1}}}
+\newcommand{\reftab}[1]{\hyperref[tab:#1]{\tablename}\xspace\ref{tab:#1}}
+\newcommand{\vreftab}[1]{\hyperref[tab:#1]{\tablename\xspace\vref{tab:#1}}}
+
+\newcommand{\refeqshort}[1]{\hyperref[eq:#1]\eqnameshort\xspace(\ref{eq:#1})}
+\renewcommand{\refeq}[1]{\hyperref[eq:#1]\eqname\xspace\ref{eq:#1}}
+\newcommand{\vrefeq}[1]{\hyperref[eq:#1]\eqname\xspace\vref{eq:#1}}
+
+\newcommand{\refdef}[1]{\hyperref[def:#1]\defname\xspace\ref{def:#1}}
+\newcommand{\vrefdef}[1]{\hyperref[def:#1]\defname\xspace\vref{def:#1}}
+
+\newcommand{\refassum}[1]{\hyperref[assum:#1]\assumname\xspace\ref{assum:#1}}
+\newcommand{\vrefassum}[1]{\hyperref[assum:#1]\assumname\xspace\vref{assum:#1}}
+
+\newcommand{\refthm}[1]{\hyperref[thm:#1]\thmname\xspace\ref{thm:#1}}
+\newcommand{\vrefthm}[1]{\hyperref[thm:#1]\thmname\xspace\vref{thm:#1}}
+
+\newcommand{\refprop}[1]{\hyperref[prop:#1]\propname\xspace\ref{prop:#1}}
+\newcommand{\vrefprop}[1]{\hyperref[prop:#1]\propname\xspace\vref{prop:#1}}
+
+\newcommand{\reflemma}[1]{\hyperref[lemma:#1]\lemmaname\xspace\ref{lemma:#1}}
+\newcommand{\vreflemma}[1]{\hyperref[lemma:#1]\lemmaname\xspace\vref{lemma:#1}}
+
+\newcommand{\refremark}[1]{\hyperref[remark:#1]\remarkname\xspace\ref{remark:#1}}
+\newcommand{\vrefremark}[1]{\hyperref[remark:#1]\remarkname\xspace\vref{remark:#1}}
+
+\newcommand{\refexample}[1]{\hyperref[example:#1]\examplename\xspace\ref{example:#1}}
+\newcommand{\vrefexample}[1]{\hyperref[example:#1]\examplename\xspace\vref{example:#1}}
+
+\newcommand{\refexercise}[1]{\hyperref[exercise:#1]\exercisename\xspace\ref{exercise:#1}}
+\newcommand{\vrefexercise}[1]{\hyperref[exercise:#1]\exercisename\xspace\vref{exercise:#1}}
+
+
+\newcommand{\sidecite}[1]{\cite{#1}\mn{\cite{#1}\citeauthor{#1}\citetitle{#1}}}
